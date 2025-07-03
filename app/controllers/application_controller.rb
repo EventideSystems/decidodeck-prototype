@@ -3,4 +3,18 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :authenticate_user!
+
+  private
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(
+      :invite,
+      keys: [
+        :email,
+        :name,
+        :system_role,
+        { workspaces_users_attributes: %i[workspace_id workspace_role] }
+      ]
+    )
+  end
 end

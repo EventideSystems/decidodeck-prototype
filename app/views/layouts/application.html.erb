@@ -23,7 +23,40 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-5">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo/Brand -->
+          <div class="flex items-center">
+            <%= image_tag "logo.svg", alt: "Decidodeck Logo", class: "h-8 w-auto mr-3" %>
+            <%= link_to root_path, class: "text-xl font-bold text-gray-800 hover:text-gray-600" do %>
+              Decidodeck
+            <% end %>
+          </div>
+
+          <!-- Navigation Links -->
+          <div class="hidden md:flex items-center space-x-6">
+            <%= link_to "Dashboard", root_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
+            <%= link_to "Decks", "#", class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
+            <%= link_to "Settings", edit_user_registration_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
+          </div>
+
+          <!-- User Menu -->
+          <div class="flex items-center space-x-4">
+            <% if user_signed_in? %>
+              <span class="text-sm text-gray-600">Hello, <%= current_user.email.split('@').first %></span>
+              <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, 
+                          class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+            <% else %>
+              <%= link_to "Sign In", new_user_session_path, 
+                          class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container mx-auto mt-8 px-5 flex">
       <%= yield %>
     </main>
   </body>
