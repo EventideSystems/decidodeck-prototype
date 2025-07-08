@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["panel", "toggleButton", "openIcon", "closeIcon"]
+  static targets = ["panel", "closedToggle"]
   
   connect() {
-    // Initialize drawer as closed
+    // Initialize drawer as partially closed (showing part of the panel)
     this.close()
   }
   
@@ -17,17 +17,15 @@ export default class extends Controller {
   }
   
   open() {
-    this.panelTarget.classList.remove("translate-x-full")
+    this.panelTarget.classList.remove("translate-x-64")
     this.panelTarget.classList.add("translate-x-0")
-    this.openIconTarget.classList.add("hidden")
-    this.closeIconTarget.classList.remove("hidden")
+    this.closedToggleTarget.classList.add("hidden")
   }
   
   close() {
-    this.panelTarget.classList.add("translate-x-full")
+    this.panelTarget.classList.add("translate-x-64")
     this.panelTarget.classList.remove("translate-x-0")
-    this.openIconTarget.classList.remove("hidden")
-    this.closeIconTarget.classList.add("hidden")
+    this.closedToggleTarget.classList.remove("hidden")
   }
   
   isOpen() {
