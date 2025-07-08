@@ -4,8 +4,8 @@ class CreateUsers < ActiveRecord::Migration[8.0]
   def change
     create_table :users, id: :uuid do |t|
       ## Database authenticatable
-      t.citext :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.citext :email, null: false
+      t.string :encrypted_password, null: false
 
       ## Recoverable
       t.string   :reset_password_token
@@ -27,6 +27,9 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email # Only if using reconfirmable
 
+      ## User status
+      t.string :status, null: false, default: 'active' # active, archived, suspended
+
       ## Additional fields
       t.string :name, null: false, default: ""
       t.string :locale, null: false, default: "en"
@@ -39,10 +42,15 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.timestamps null: false
     end
 
+    # Indexes
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
+    add_index :users, :status
     add_index :users, :name
     add_index :users, :discarded_at
+
+    # Check constraints
+    add_check_constraint :users, "status IN ('active', 'suspended', 'archived')", name: "users_valid_status"
   end
 end

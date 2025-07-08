@@ -2,7 +2,7 @@ class CreateWorkspaces < ActiveRecord::Migration[8.0]
   def change
     create_table :workspaces, id: :uuid do |t|
       # Core workspace information
-      t.citext :citext, null: false
+      t.citext :name, null: false
       t.text :description
 
       ## Workspace type and status

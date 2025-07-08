@@ -35,13 +35,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
     t.index ["plan"], name: "index_accounts_on_plan"
     t.index ["status"], name: "index_accounts_on_status"
-    t.check_constraint "plan::text = ANY (ARRAY['trial'::character varying::text, 'free'::character varying::text, 'pro'::character varying::text, 'enterprise'::character varying::text])", name: "accounts_valid_plan"
-    t.check_constraint "status::text = ANY (ARRAY['active'::character varying::text, 'suspended'::character varying::text, 'archived'::character varying::text])", name: "accounts_valid_status"
+    t.check_constraint "plan::text = ANY (ARRAY['trial'::character varying, 'free'::character varying, 'pro'::character varying, 'enterprise'::character varying]::text[])", name: "accounts_valid_plan"
+    t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "accounts_valid_status"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.citext "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.citext "email", null: false
+    t.string "encrypted_password", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -52,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.string "status", default: "active", null: false
     t.string "name", default: "", null: false
     t.string "locale", default: "en", null: false
     t.string "time_zone", default: "UTC", null: false
@@ -65,6 +66,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["status"], name: "index_users_on_status"
+    t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "users_valid_status"
   end
 
   create_table "workspaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -82,9 +85,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
     t.index ["discarded_at"], name: "index_workspaces_on_discarded_at"
     t.index ["status"], name: "index_workspaces_on_status"
     t.index ["workspace_type"], name: "index_workspaces_on_workspace_type"
-    t.check_constraint "char_length(name::text) >= 2", name: "workspaces_name_length"
-    t.check_constraint "status::text = ANY (ARRAY['active'::character varying::text, 'archived'::character varying::text, 'suspended'::character varying::text])", name: "workspaces_valid_status"
-    t.check_constraint "workspace_type::text = ANY (ARRAY['project'::character varying::text, 'program'::character varying::text, 'department'::character varying::text, 'initiative'::character varying::text, 'template'::character varying::text])", name: "workspaces_valid_type"
+    t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'archived'::character varying, 'suspended'::character varying]::text[])", name: "workspaces_valid_status"
+    t.check_constraint "workspace_type::text = ANY (ARRAY['project'::character varying, 'program'::character varying, 'department'::character varying, 'initiative'::character varying, 'template'::character varying]::text[])", name: "workspaces_valid_type"
   end
 
   add_foreign_key "accounts", "users", column: "owner_id"
@@ -819,11 +821,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
   SQL
 
 
-  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_accounts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_workspaces, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_workspaces BEFORE INSERT OR UPDATE ON public.workspaces FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
