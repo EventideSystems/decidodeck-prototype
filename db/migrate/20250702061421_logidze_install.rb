@@ -13,6 +13,5 @@ class LogidzeInstall < ActiveRecord::Migration[8.0]
     create_function :logidze_snapshot, version: 3
 
     create_function :logidze_version, version: 2
-
   end
 end
