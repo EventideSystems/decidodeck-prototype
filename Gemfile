@@ -46,6 +46,7 @@ gem "thruster", require: false
 gem "fx"
 gem "logidze"
 gem "discard"
+gem "scenic"
 
 group :development, :test do
   gem "bundle-audit", require: false

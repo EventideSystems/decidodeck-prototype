@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_08_135431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -37,6 +37,57 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
     t.index ["status"], name: "index_accounts_on_status"
     t.check_constraint "plan::text = ANY (ARRAY['trial'::character varying, 'free'::character varying, 'pro'::character varying, 'enterprise'::character varying]::text[])", name: "accounts_valid_plan"
     t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "accounts_valid_status"
+  end
+
+  create_table "stakeholders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", limit: 50, null: false
+    t.string "name", limit: 200, null: false
+    t.text "description"
+    t.string "status", default: "active", null: false
+    t.citext "email"
+    t.string "phone", limit: 20
+    t.text "address"
+    t.string "website", limit: 100
+    t.string "first_name", limit: 50
+    t.string "last_name", limit: 50
+    t.string "job_title", limit: 100
+    t.date "birth_date"
+    t.string "legal_name", limit: 200
+    t.string "organization_type", limit: 50
+    t.string "industry", limit: 100
+    t.integer "employee_count"
+    t.date "founded_date"
+    t.string "stakeholder_type", limit: 50
+    t.string "influence_level", default: "medium", null: false
+    t.string "interest_level", default: "medium", null: false
+    t.integer "priority_score", default: 50
+    t.uuid "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "log_data"
+    t.index ["account_id", "name"], name: "index_stakeholders_on_account_id_and_name"
+    t.index ["account_id", "stakeholder_type"], name: "index_stakeholders_on_account_id_and_stakeholder_type"
+    t.index ["account_id", "type"], name: "index_stakeholders_on_account_id_and_type"
+    t.index ["account_id"], name: "index_active_stakeholders_on_account", where: "((status)::text = 'active'::text)"
+    t.index ["account_id"], name: "index_stakeholders_on_account_id"
+    t.index ["email"], name: "index_stakeholders_on_email"
+    t.index ["first_name", "last_name"], name: "index_stakeholders_on_first_name_and_last_name", where: "((type)::text = 'People::Person'::text)"
+    t.index ["influence_level"], name: "index_stakeholders_on_influence_level"
+    t.index ["interest_level"], name: "index_stakeholders_on_interest_level"
+    t.index ["organization_type"], name: "index_stakeholders_on_organization_type", where: "((type)::text = 'People::Organization'::text)"
+    t.index ["priority_score"], name: "index_stakeholders_on_priority_score"
+    t.index ["stakeholder_type"], name: "index_stakeholders_on_stakeholder_type"
+    t.index ["status"], name: "index_stakeholders_on_status"
+    t.index ["type"], name: "index_stakeholders_on_type"
+    t.check_constraint "char_length(name::text) >= 1", name: "stakeholders_name_length"
+    t.check_constraint "influence_level::text = ANY (ARRAY['low'::character varying, 'medium'::character varying, 'high'::character varying, 'critical'::character varying]::text[])", name: "stakeholders_valid_influence_level"
+    t.check_constraint "interest_level::text = ANY (ARRAY['low'::character varying, 'medium'::character varying, 'high'::character varying, 'critical'::character varying]::text[])", name: "stakeholders_valid_interest_level"
+    t.check_constraint "priority_score >= 1 AND priority_score <= 100", name: "stakeholders_valid_priority_score"
+    t.check_constraint "stakeholder_type::text = ANY (ARRAY['customer'::character varying, 'supplier'::character varying, 'partner'::character varying, 'investor'::character varying, 'employee'::character varying, 'regulator'::character varying, 'community'::character varying, 'other'::character varying]::text[])", name: "stakeholders_valid_stakeholder_type"
+    t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'inactive'::character varying, 'archived'::character varying]::text[])", name: "stakeholders_valid_status"
+    t.check_constraint "type::text <> 'Stakeholders::Individual'::text OR first_name IS NOT NULL AND last_name IS NOT NULL", name: "person_requires_names"
+    t.check_constraint "type::text <> 'Stakeholders::Organization'::text OR legal_name IS NOT NULL", name: "organization_requires_legal_name"
+    t.check_constraint "type::text = ANY (ARRAY['Stakeholders::Individual'::character varying, 'Stakeholders::Organization'::character varying]::text[])", name: "stakeholders_valid_type"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -90,6 +141,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
   end
 
   add_foreign_key "accounts", "users", column: "owner_id"
+  add_foreign_key "stakeholders", "accounts"
   add_foreign_key "workspaces", "accounts"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_capture_exception(error_data jsonb)
@@ -829,5 +881,38 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_022245) do
   SQL
   create_trigger :logidze_on_workspaces, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_workspaces BEFORE INSERT OR UPDATE ON public.workspaces FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_stakeholders, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_stakeholders BEFORE INSERT OR UPDATE ON public.stakeholders FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+
+  create_view "people", sql_definition: <<-SQL
+      SELECT id,
+      type,
+      name,
+      description,
+      status,
+      email,
+      phone,
+      address,
+      website,
+      first_name,
+      last_name,
+      job_title,
+      birth_date,
+      legal_name,
+      organization_type,
+      industry,
+      employee_count,
+      founded_date,
+      stakeholder_type,
+      influence_level,
+      interest_level,
+      priority_score,
+      account_id,
+      created_at,
+      updated_at,
+      log_data
+     FROM stakeholders;
   SQL
 end
