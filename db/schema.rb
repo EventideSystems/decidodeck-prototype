@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_135431) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -888,7 +888,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_135431) do
 
   create_view "people", sql_definition: <<-SQL
       SELECT id,
-      type,
       name,
       description,
       status,
@@ -909,10 +908,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_135431) do
       influence_level,
       interest_level,
       priority_score,
-      account_id,
-      created_at,
-      updated_at,
-      log_data
+      account_id
      FROM stakeholders;
   SQL
 end
