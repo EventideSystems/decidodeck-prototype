@@ -20,5 +20,10 @@ select
   influence_level,
   interest_level,
   priority_score,
-  account_id
+  account_id,
+  case type
+  when 'Stakeholders::Individual' then 'Individual'
+  when 'Stakeholders::Organization' then 'Organization'
+  else 'Unknown'
+  end as person_type
 from stakeholders

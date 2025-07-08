@@ -908,7 +908,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
       influence_level,
       interest_level,
       priority_score,
-      account_id
+      account_id,
+          CASE type
+              WHEN 'Stakeholders::Individual'::text THEN 'Individual'::text
+              WHEN 'Stakeholders::Organization'::text THEN 'Organization'::text
+              ELSE 'Unknown'::text
+          END AS person_type
      FROM stakeholders;
   SQL
 end
