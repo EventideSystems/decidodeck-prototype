@@ -20,44 +20,84 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <!-- Dark mode initialization script -->
+    <script>
+      // Initialize dark mode before page renders to prevent flash
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // If user has manually set a preference, use that
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          // Only use system preference if no manual preference is set
+          if (prefersDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        }
+      })();
+    </script>
   </head>
 
-  <body>
-    <nav class="bg-white shadow-sm border-b border-gray-200">
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div class="container mx-auto px-5">
         <div class="flex justify-between items-center h-16">
           <!-- Logo/Brand -->
           <div class="flex items-center">
             <%= image_tag "logo.svg", alt: "Decidodeck Logo", class: "h-8 w-auto mr-3" %>
-            <%= link_to root_path, class: "text-xl font-bold text-gray-800 hover:text-gray-600" do %>
+            <%= link_to root_path, class: "text-xl font-bold text-gray-800 dark:text-white hover:text-gray-600 dark:hover:text-gray-300" do %>
               Decidodeck
             <% end %>
           </div>
 
           <!-- Navigation Links -->
           <div class="hidden md:flex items-center space-x-6">
-            <%= link_to "Workspace", root_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
-            <%= link_to "People", people_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
-            <%= link_to "Library", people_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
-            <%#= link_to "Settings", edit_user_registration_path, class: "text-gray-600 hover:text-gray-800 transition duration-200" %>
+            <%= link_to "Workspace", root_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
+            <%= link_to "People", people_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
+            <%= link_to "Library", people_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
+            <%#= link_to "Settings", edit_user_registration_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
           </div>
 
           <!-- User Menu -->
           <div class="flex items-center space-x-4">
+            <!-- Dark Mode Toggle -->
+            <button 
+              data-controller="dark-mode"
+              data-action="click->dark-mode#toggle"
+              class="p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"
+              title="Toggle dark mode"
+            >
+              <!-- Sun icon (visible in dark mode) -->
+              <svg data-dark-mode-target="sunIcon" class="h-5 w-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              <!-- Moon icon (visible in light mode) -->
+              <svg data-dark-mode-target="moonIcon" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+            </button>
+            
             <% if user_signed_in? %>
-              <span class="text-sm text-gray-600">Hello, <%= current_user.email.split('@').first %></span>
+              <span class="text-sm text-gray-600 dark:text-gray-300">Hello, <%= current_user.email.split('@').first %></span>
               <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, 
-                          class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+                          class: "bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
             <% else %>
               <%= link_to "Sign In", new_user_session_path, 
-                          class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+                          class: "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
             <% end %>
           </div>
         </div>
       </div>
     </nav>
 
-    <main class="container mx-auto mt-8 px-5 flex">
+    <main class="container mx-auto mt-8 px-5 flex min-h-screen bg-white dark:bg-gray-900">
       <%= yield %>
     </main>
   </body>
