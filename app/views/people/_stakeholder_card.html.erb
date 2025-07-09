@@ -1,49 +1,51 @@
-<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 flex flex-col h-full">
-  <div class="flex items-start justify-between mb-4">
-    <div class="flex items-center">
-      <div class="h-12 w-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
-        <%= person.name.split.map(&:first).join.upcase %>
+<%= link_to stakeholder_path(id: person.id ) do %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 flex flex-col h-full">
+    <div class="flex items-start justify-between mb-4">
+      <div class="flex items-center">
+        <div class="h-12 w-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+          <%= person.name.split.map(&:first).join.upcase %>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-lg font-medium text-gray-900"><%= person.name %></h3>
+          <p class="text-sm text-gray-500"><%= person.try(:role) || "Person" %></p>
+        </div>
       </div>
-      <div class="ml-3">
-        <h3 class="text-lg font-medium text-gray-900"><%= person.name %></h3>
-        <p class="text-sm text-gray-500"><%= person.try(:role) || "Person" %></p>
-      </div>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+        Active
+      </span>
     </div>
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-      Active
-    </span>
-  </div>
-  
-  <div class="space-y-2 mb-4 flex-1">
-    <% if person.try(:email).present? %>
+    
+    <div class="space-y-2 mb-4 flex-1">
+      <% if person.try(:email).present? %>
+        <div class="flex items-center text-sm text-gray-600">
+          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          <%= person.email %>
+        </div>
+      <% end %>
+      
       <div class="flex items-center text-sm text-gray-600">
         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
         </svg>
-        <%= person.email %>
+        <%= person.person_type %>
       </div>
-    <% end %>
+    </div>
     
-    <div class="flex items-center text-sm text-gray-600">
-      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-      </svg>
-      <%= person.person_type %>
+    <div class="flex items-center justify-between">
+      <div class="flex space-x-2">
+        <% if person.try(:influence_level) %>
+          <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
+            <%= person.influence_level.humanize %> Influence
+          </span>
+        <% end %>
+        <% if person.try(:interest_level) %>
+          <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800">
+            <%= person.interest_level.humanize %> Interest
+          </span>
+        <% end %>
+      </div>
     </div>
   </div>
-  
-  <div class="flex items-center justify-between">
-    <div class="flex space-x-2">
-      <% if person.try(:influence_level) %>
-        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
-          <%= person.influence_level.humanize %> Influence
-        </span>
-      <% end %>
-      <% if person.try(:interest_level) %>
-        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800">
-          <%= person.interest_level.humanize %> Interest
-        </span>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% end %>
