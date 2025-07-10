@@ -21,9 +21,10 @@ select
   interest_level,
   priority_score,
   account_id,
+  'Stakeholder' as person_type,
   case type
   when 'Stakeholders::Individual' then 'Individual'
   when 'Stakeholders::Organization' then 'Organization'
   else 'Unknown'
-  end as person_type
+  end as person_sub_type
 from stakeholders
