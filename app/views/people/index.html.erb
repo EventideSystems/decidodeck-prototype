@@ -190,9 +190,9 @@
     </button>
   </div>
 
-  <!-- Light overlay only over main content when drawer is open -->
+  <!-- Overlay with blur effect only (no background color) -->
   <div data-drawer-target="overlay" 
-       data-action="click->drawer#close"
-       class="absolute inset-0 bg-white/40 dark:bg-black/30 opacity-0 pointer-events-none transition-all duration-300 z-40"
+       data-action="click->drawer#closeOnOverlay"
+       class="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 z-40"
        style="backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);"></div>
 </div>

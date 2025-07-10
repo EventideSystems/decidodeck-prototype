@@ -21,6 +21,26 @@ export default class extends Controller {
       this.panelTarget.classList.add("translate-x-full")
       this.panelTarget.classList.remove("translate-x-0")
     }
+    
+    // Add keyboard event listener for ESC key
+    this.keydownHandler = this.handleKeydown.bind(this)
+    document.addEventListener("keydown", this.keydownHandler)
+  }
+
+  disconnect() {
+    // Clean up keyboard event listener
+    document.removeEventListener("keydown", this.keydownHandler)
+  }
+
+  handleKeydown(event) {
+    // Close drawer when ESC key is pressed
+    if (event.key === "Escape" || event.keyCode === 27) {
+      const isOpen = this.hasPanelTarget && this.panelTarget.classList.contains("translate-x-0")
+      if (isOpen) {
+        console.log("⌨️ ESC key pressed - closing drawer")
+        this.close()
+      }
+    }
   }
 
   toggle() {
@@ -82,5 +102,10 @@ export default class extends Controller {
     }
     
     console.log("✅ Drawer closed")
+  }
+
+  closeOnOverlay() {
+    console.log("📱 Overlay clicked - closing drawer")
+    this.close()
   }
 }
