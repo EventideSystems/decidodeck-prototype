@@ -22,6 +22,9 @@ export default class extends Controller {
       this.panelTarget.classList.remove("translate-x-0")
     }
     
+    // Set initial icon direction (arrow pointing left when closed)
+    this.updateIconDirection(false)
+    
     // Add keyboard event listener for ESC key
     this.keydownHandler = this.handleKeydown.bind(this)
     document.addEventListener("keydown", this.keydownHandler)
@@ -80,6 +83,9 @@ export default class extends Controller {
       this.contentTarget.style.transition = "filter 300ms ease"
     }
     
+    // Update icon direction (arrow pointing right when open)
+    this.updateIconDirection(true)
+    
     console.log("✅ Drawer opened")
   }
 
@@ -101,11 +107,38 @@ export default class extends Controller {
       this.contentTarget.style.filter = "none"
     }
     
+    // Update icon direction (arrow pointing left when closed)
+    this.updateIconDirection(false)
+    
     console.log("✅ Drawer closed")
   }
 
   closeOnOverlay() {
     console.log("📱 Overlay clicked - closing drawer")
     this.close()
+  }
+
+  updateIconDirection(isOpen) {
+    if (!this.hasIconTarget) {
+      console.log("⚠️ No icon target found for direction update")
+      return
+    }
+
+    // Get the path element inside the SVG
+    const pathElement = this.iconTarget.querySelector('path')
+    if (!pathElement) {
+      console.log("⚠️ No path element found in icon")
+      return
+    }
+
+    if (isOpen) {
+      // Arrow pointing right (when open, to indicate "close")
+      pathElement.setAttribute('d', 'M9 5l7 7-7 7')
+      console.log("🔄 Icon updated: arrow pointing right (close)")
+    } else {
+      // Arrow pointing left (when closed, to indicate "open")
+      pathElement.setAttribute('d', 'M15 19l-7-7 7-7')
+      console.log("🔄 Icon updated: arrow pointing left (open)")
+    }
   }
 }
