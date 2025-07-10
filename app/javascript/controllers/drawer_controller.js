@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="drawer"
 export default class extends Controller {
-  static targets = ["panel", "overlay", "tab", "icon"]
+  static targets = ["panel", "overlay", "tab", "icon", "content"]
 
   connect() {
     console.log("🎯 Drawer controller connected!")
@@ -12,7 +12,8 @@ export default class extends Controller {
       panel: this.hasPanelTarget ? "✅" : "❌",
       overlay: this.hasOverlayTarget ? "✅" : "❌", 
       tab: this.hasTabTarget ? "✅" : "❌",
-      icon: this.hasIconTarget ? "✅" : "❌"
+      icon: this.hasIconTarget ? "✅" : "❌",
+      content: this.hasContentTarget ? "✅" : "❌"
     })
     
     // Make sure drawer starts closed
@@ -53,6 +54,12 @@ export default class extends Controller {
       this.overlayTarget.classList.add("opacity-100", "pointer-events-auto")
     }
     
+    // Apply blur to main content
+    if (this.hasContentTarget) {
+      this.contentTarget.style.filter = "blur(0.5px)"
+      this.contentTarget.style.transition = "filter 300ms ease"
+    }
+    
     console.log("✅ Drawer opened")
   }
 
@@ -67,6 +74,11 @@ export default class extends Controller {
     if (this.hasOverlayTarget) {
       this.overlayTarget.classList.remove("opacity-100", "pointer-events-auto")
       this.overlayTarget.classList.add("opacity-0", "pointer-events-none")
+    }
+    
+    // Remove blur from main content
+    if (this.hasContentTarget) {
+      this.contentTarget.style.filter = "none"
     }
     
     console.log("✅ Drawer closed")
