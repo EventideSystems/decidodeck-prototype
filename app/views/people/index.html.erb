@@ -64,7 +64,7 @@
     <div data-drawer-target="tab" 
          class="absolute top-1/2 -left-9 transform -translate-y-1/2 z-10">
       <button data-action="click->drawer#toggle" 
-              class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 border-r-0 rounded-l-lg px-2 py-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 shadow-lg">
+              class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 border-r-0 rounded-l-lg px-2 py-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
         <svg data-drawer-target="icon" class="h-5 w-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -193,6 +193,6 @@
   <!-- Overlay with blur effect only (no background color) -->
   <div data-drawer-target="overlay" 
        data-action="click->drawer#closeOnOverlay"
-       class="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 z-40"
-       style="backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);"></div>
+       class="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 z-40 backdrop-blur-[1px] xbg-white/30"
+       xstyle="backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);"></div>
 </div>
