@@ -5,9 +5,9 @@ class StakeholdersController < ApplicationController
   before_action :set_stakeholder, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    # @stakeholders = current_user.account.stakeholders.active.includes(:account)
+    @stakeholders = current_account.stakeholders.active.includes(:account)
 
-    @stakeholders = Stakeholders::Base.all
+    # @stakeholders = Stakeholders::Base.
 
     @stakeholders = filter_stakeholders(@stakeholders) if params[:filter].present?
     @stakeholders = sort_stakeholders(@stakeholders) if params[:sort].present?

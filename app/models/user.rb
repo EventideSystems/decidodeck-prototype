@@ -10,12 +10,24 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
 
-  has_many :accounts, dependent: :destroy, inverse_of: :owner
+  has_many :accounts, dependent: :destroy, inverse_of: :owner, foreign_key: :owner_id
   has_many :workspaces, through: :accounts
 
   attr_accessor :current_sign_in_ip, :last_sign_in_ip
 
   def active_for_authentication?
     super && active? && !discarded?
+  end
+
+  def primary_account
+    accounts.first
+  end
+
+  def account_owner?(account)
+    account&.owner_id == id
+  end
+
+  def can_access_account?(account)
+    account_owner?(account)
   end
 end
