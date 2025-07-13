@@ -42,6 +42,10 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Authentication and authorization
+gem "devise", "~> 4.9"
+gem "pundit", "~> 2.5"
+
 # Database-related gems
 gem "fx"
 gem "logidze"
@@ -62,11 +66,13 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
+group :test do
+  gem "capybara"
+  gem "cucumber-rails", require: false
+  gem "database_cleaner"
+end
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
-
-gem "devise", "~> 4.9"
-
-gem "pundit", "~> 2.5"

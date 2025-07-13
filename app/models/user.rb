@@ -30,4 +30,13 @@ class User < ApplicationRecord
   def can_access_account?(account)
     account_owner?(account)
   end
+
+  def can_access_workspace?(workspace)
+    return false unless workspace
+    can_access_account?(workspace.account)
+  end
+
+  def accessible_workspaces
+    workspaces.joins(:account).where(accounts: { owner_id: id })
+  end
 end

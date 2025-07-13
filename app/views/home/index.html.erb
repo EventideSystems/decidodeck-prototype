@@ -1,2 +1,6 @@
-<h1>Here</h1>
-<%= current_user&.email %>
+
+<ul>
+  <li><%= current_user&.email %></li>
+  <li><%= current_account&.name %></li>
+  <li><%= current_workspace&.name %></li>
+</ul>

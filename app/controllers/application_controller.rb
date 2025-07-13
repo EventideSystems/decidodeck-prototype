@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :set_current_account
+  before_action :set_current_workspace
 
   protected
 
@@ -13,6 +14,11 @@ class ApplicationController < ActionController::Base
     @current_account
   end
   helper_method :current_account
+
+  def current_workspace
+    @current_workspace
+  end
+  helper_method :current_workspace
 
   private
 
@@ -29,6 +35,21 @@ class ApplicationController < ActionController::Base
 
     # Update session to track current account
     session[:current_account_id] = @current_account&.id
+  end
+
+  def set_current_workspace
+    return unless current_account
+
+    # Try to get workspace from session first (for workspace switching)
+    if session[:current_workspace_id].present?
+      @current_workspace = current_account.workspaces.find_by(id: session[:current_workspace_id])
+    end
+
+    # Fallback to account's first workspace if no session workspace or if workspace not found
+    @current_workspace ||= current_account.workspaces.first
+
+    # Update session to track current workspace
+    session[:current_workspace_id] = @current_workspace&.id
   end
 
   def configure_permitted_parameters
