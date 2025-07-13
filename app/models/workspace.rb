@@ -5,18 +5,18 @@ class Workspace < ApplicationRecord
   belongs_to :account
 
   validates :name, presence: true
-  validates :workspace_type, inclusion: { 
-    in: %w[project program department initiative template] 
+  validates :workspace_type, inclusion: {
+    in: %w[project program department initiative template]
   }
-  validates :status, inclusion: { 
-    in: %w[active archived suspended] 
+  validates :status, inclusion: {
+    in: %w[active archived suspended]
   }
 
-  scope :active, -> { where(status: 'active') }
+  scope :active, -> { where(status: "active") }
   scope :by_type, ->(type) { where(workspace_type: type) }
 
   def active?
-    status == 'active'
+    status == "active"
   end
 
   def display_name

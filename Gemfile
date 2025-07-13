@@ -68,6 +68,7 @@ end
 
 group :test do
   gem "capybara"
+  gem "cuprite"
   gem "cucumber-rails", require: false
   gem "database_cleaner"
 end
