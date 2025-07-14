@@ -9,7 +9,7 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
       t.string :status, null: false, default: 'active' # active, archived, suspended
 
       ## Subscription and billing
-      t.string :plan, null: false, default: 'trial' # trial, free, pro, enterprise
+      t.string :plan, null: false, default: 'free' # free, trial, collective, consulting, enterprise
       t.datetime :plan_expires_at, null: false, default: "now() + interval '14 day';"
 
       ## Usage limits and quotas
@@ -33,6 +33,6 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
 
     # Check constraints
     add_check_constraint :accounts, "status IN ('active', 'suspended', 'archived')", name: "accounts_valid_status"
-    add_check_constraint :accounts, "plan IN ('trial', 'free', 'pro', 'enterprise')", name: "accounts_valid_plan"
+    add_check_constraint :accounts, "plan IN ('free', 'trial', 'collective', 'consulting', 'enterprise')", name: "accounts_valid_plan"
   end
 end

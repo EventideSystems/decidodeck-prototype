@@ -34,6 +34,9 @@ class CreateStakeholders < ActiveRecord::Migration[8.0]
       t.string :interest_level, null: false, default: 'medium' # low, medium, high, critical
       t.integer :priority_score, default: 50 # 1-100 scale
 
+      ## Discardable
+      t.datetime :discarded_at, null: true
+
       ## Foreign keys as UUIDs
       t.references :account, null: false, foreign_key: true, type: :uuid
 

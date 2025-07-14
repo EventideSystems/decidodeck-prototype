@@ -21,7 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
     t.citext "name", null: false
     t.text "description"
     t.string "status", default: "active", null: false
-    t.string "plan", default: "trial", null: false
+    t.string "plan", default: "free", null: false
     t.datetime "plan_expires_at", default: "2014-01-01 00:00:00", null: false
     t.integer "max_users", default: 3
     t.integer "max_workspaces", default: 1
@@ -35,7 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
     t.index ["plan"], name: "index_accounts_on_plan"
     t.index ["status"], name: "index_accounts_on_status"
-    t.check_constraint "plan::text = ANY (ARRAY['trial'::character varying, 'free'::character varying, 'pro'::character varying, 'enterprise'::character varying]::text[])", name: "accounts_valid_plan"
+    t.check_constraint "plan::text = ANY (ARRAY['free'::character varying, 'trial'::character varying, 'collective'::character varying, 'consulting'::character varying, 'enterprise'::character varying]::text[])", name: "accounts_valid_plan"
     t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "accounts_valid_status"
   end
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
     t.string "influence_level", default: "medium", null: false
     t.string "interest_level", default: "medium", null: false
     t.integer "priority_score", default: 50
+    t.datetime "discarded_at"
     t.uuid "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
