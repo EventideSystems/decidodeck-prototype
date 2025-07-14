@@ -4,6 +4,7 @@ class Workspace < ApplicationRecord
   has_logidze
 
   belongs_to :account
+  has_many :artifacts, dependent: :destroy
 
   validates :name, presence: true
   validates :workspace_type, inclusion: {

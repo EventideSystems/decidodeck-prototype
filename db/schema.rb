@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -37,6 +37,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
     t.index ["status"], name: "index_accounts_on_status"
     t.check_constraint "plan::text = ANY (ARRAY['free'::character varying, 'trial'::character varying, 'collective'::character varying, 'consulting'::character varying, 'enterprise'::character varying]::text[])", name: "accounts_valid_plan"
     t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "accounts_valid_status"
+  end
+
+  create_table "artifact_content_infos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
+    t.string "markdown"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "log_data"
+    t.index ["owner_type", "owner_id"], name: "index_artifact_content_infos_on_owner"
+  end
+
+  create_table "artifacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "workspace_id", null: false
+    t.string "content_type", null: false
+    t.uuid "content_id", null: false
+    t.integer "position", default: 0, null: false
+    t.string "tags", default: [], array: true
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "log_data"
+    t.index ["content_type", "content_id"], name: "index_artifacts_on_content"
+    t.index ["workspace_id"], name: "index_artifacts_on_workspace_id"
   end
 
   create_table "stakeholders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -142,6 +166,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
   end
 
   add_foreign_key "accounts", "users", column: "owner_id"
+  add_foreign_key "artifacts", "workspaces"
   add_foreign_key "stakeholders", "accounts"
   add_foreign_key "workspaces", "accounts"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
@@ -885,6 +910,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_141455) do
   SQL
   create_trigger :logidze_on_stakeholders, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_stakeholders BEFORE INSERT OR UPDATE ON public.stakeholders FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_artifacts, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_artifacts BEFORE INSERT OR UPDATE ON public.artifacts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_artifact_content_infos, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_artifact_content_infos BEFORE INSERT OR UPDATE ON public.artifact_content_infos FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 
   create_view "people", sql_definition: <<-SQL

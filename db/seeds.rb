@@ -124,6 +124,80 @@ stakeholders_data.each do |stakeholder_attrs|
   end
 end
 
+# Create example artifact content infos
+artifact_content_infos_data = [
+  {
+    owner: account,
+    markdown: "# Project Overview\n\nThis document outlines the strategic direction and key objectives for our product roadmap in 2025.\n\n## Key Goals\n- Improve user engagement by 40%\n- Reduce time-to-value for new users\n- Expand market reach"
+  },
+  {
+    owner: account,
+    markdown: "# Technical Architecture\n\n## System Components\n\n### Frontend\n- React with TypeScript\n- Tailwind CSS for styling\n- Vite for build tooling\n\n### Backend\n- Ruby on Rails API\n- PostgreSQL database\n- Redis for caching"
+  },
+  {
+    owner: account,
+    markdown: "# User Research Findings\n\n## Executive Summary\n\nOur recent user research revealed several key insights about user behavior and preferences.\n\n## Key Findings\n1. Users prefer simplified navigation\n2. Mobile experience needs improvement\n3. Onboarding process is too complex"
+  },
+  {
+    owner: account,
+    markdown: "# Marketing Strategy Q1\n\n## Campaign Objectives\n- Increase brand awareness\n- Generate qualified leads\n- Drive product adoption\n\n## Target Channels\n- Social media campaigns\n- Content marketing\n- Partner collaborations"
+  },
+  {
+    owner: account,
+    markdown: "# Decision Framework\n\n## Evaluation Criteria\n\n### Technical Feasibility\n- Implementation complexity\n- Resource requirements\n- Timeline constraints\n\n### Business Impact\n- Revenue potential\n- Market opportunity\n- Competitive advantage"
+  }
+]
+
+artifact_content_infos = []
+artifact_content_infos_data.each_with_index do |info_attrs, index|
+  info = ArtifactContent::Info.find_or_create_by!(
+    owner: info_attrs[:owner],
+    markdown: info_attrs[:markdown]
+  )
+  artifact_content_infos << info
+  puts "✅ Created artifact content info #{index + 1}: #{info.display_name}"
+end
+
+# Create example artifacts
+workspaces = account.workspaces.to_a
+artifacts_data = [
+  {
+    workspace: workspaces[0],
+    content: artifact_content_infos[0],
+    tags: ["strategy", "product", "roadmap"]
+  },
+  {
+    workspace: workspaces[0],
+    content: artifact_content_infos[4],
+    tags: ["decision", "framework", "process"]
+  },
+  {
+    workspace: workspaces[1],
+    content: artifact_content_infos[3],
+    tags: ["marketing", "campaign", "q1"]
+  },
+  {
+    workspace: workspaces[2],
+    content: artifact_content_infos[1],
+    tags: ["technical", "architecture", "engineering"]
+  },
+  {
+    workspace: workspaces[0],
+    content: artifact_content_infos[2],
+    tags: ["research", "users", "insights"]
+  }
+]
+
+artifacts_data.each do |artifact_attrs|
+  Artifact.find_or_create_by!(
+    workspace: artifact_attrs[:workspace],
+    content: artifact_attrs[:content]
+  ) do |a|
+    a.tags = artifact_attrs[:tags]
+    puts "✅ Created artifact with tags: #{a.tags.join(', ')}"
+  end
+end
+
 puts "🎉 Seeding completed!"
 puts ""
 puts "Demo credentials:"
@@ -134,3 +208,5 @@ puts "Created:"
 puts "  - 1 demo user"
 puts "  - 1 demo account (#{account.name})"
 puts "  - #{account.workspaces.count} sample workspaces"
+puts "  - #{account.workspaces.map(&:artifacts).flatten.count} artifacts"
+puts "  - #{artifact_content_infos.count} artifact content infos"

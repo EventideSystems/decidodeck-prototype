@@ -1,0 +1,198 @@
+<div class="h-screen bg-gray-50 dark:bg-gray-900 relative" data-controller="drawer">
+  <!-- Main Content Area (Workspace Cards) -->
+  <div data-drawer-target="content" class="h-full p-6 overflow-y-auto transition-all duration-300">
+    <div class="mb-6">
+      <div class="flex items-center justify-between mb-2">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Workspaces</h1>
+        <div class="flex space-x-3">
+          <button class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+            </svg>
+            Filter
+          </button>
+          <button class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5v4m8-4v4"/>
+            </svg>
+            Sort
+          </button>
+          <%= link_to new_workspace_path, class: "flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 dark:bg-blue-500 border border-transparent rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800" do %>
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            New Workspace
+          <% end %>
+          <!-- Actions Drawer Toggle -->
+          <button data-action="click->drawer#toggle" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            Actions
+          </button>
+        </div>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400">Manage your project workspaces and environments</p>
+    </div>
+    
+    <!-- Workspaces Cards Container -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @workspaces.each do |workspace| %>
+        <%= render 'workspace_card', workspace: workspace %>
+      <% end %>
+      
+      <!-- Add Workspace Card -->
+      <%= link_to new_workspace_path, class: "block" do %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 hover:border-gray-400 dark:hover:border-gray-500 transition-colors duration-200 cursor-pointer">
+          <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Create Workspace</h3>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Set up a new project workspace</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Floating Actions Drawer -->
+  <div data-drawer-target="panel" 
+       class="fixed top-0 right-0 h-full w-96 bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+    
+    <!-- Drawer Tab - Attached to drawer panel -->
+    <div data-drawer-target="tab" 
+         class="absolute top-1/2 -left-9 transform -translate-y-1/2 z-10">
+      <button data-action="click->drawer#toggle" 
+              class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 border-r-0 rounded-l-lg px-2 py-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 shadow-lg">
+        <svg data-drawer-target="icon" class="h-5 w-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Quick Actions</h2>
+      <button data-action="click->drawer#close" 
+              class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Drawer Content -->
+    <div class="h-full overflow-y-auto p-6">
+      <!-- Action Cards -->
+      <div class="space-y-4">
+        <!-- Create Project Workspace -->
+        <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors duration-200">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+            <div class="ml-3 flex-1">
+              <%= link_to new_workspace_path, class: "block group" do %>
+                <h3 class="text-sm font-medium text-blue-900 dark:text-blue-100 group-hover:text-blue-800 dark:group-hover:text-blue-50">Create Project</h3>
+                <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">Set up a new project workspace</p>
+                <span class="mt-2 inline-block text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-500 dark:group-hover:text-blue-300">
+                  Create Project →
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Create Program Workspace -->
+        <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors duration-200">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+              </svg>
+            </div>
+            <div class="ml-3 flex-1">
+              <div class="block group cursor-pointer">
+                <h3 class="text-sm font-medium text-purple-900 dark:text-purple-100 group-hover:text-purple-800 dark:group-hover:text-purple-50">Create Program</h3>
+                <p class="text-sm text-purple-700 dark:text-purple-300 mt-1">Set up a multi-project program workspace</p>
+                <span class="mt-2 inline-block text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:text-purple-500 dark:group-hover:text-purple-300">
+                  Create Program →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Create Department Workspace -->
+        <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4 border border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors duration-200">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <div class="ml-3 flex-1">
+              <div class="block group cursor-pointer">
+                <h3 class="text-sm font-medium text-green-900 dark:text-green-100 group-hover:text-green-800 dark:group-hover:text-green-50">Create Department</h3>
+                <p class="text-sm text-green-700 dark:text-green-300 mt-1">Set up a departmental workspace</p>
+                <span class="mt-2 inline-block text-sm font-medium text-green-600 dark:text-green-400 group-hover:text-green-500 dark:group-hover:text-green-300">
+                  Create Department →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Import Workspace Template -->
+        <div class="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4 border border-orange-200 dark:border-orange-800 hover:bg-orange-100 dark:hover:bg-orange-900/50 transition-colors duration-200">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-6 w-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+              </svg>
+            </div>
+            <div class="ml-3 flex-1">
+              <div class="block group cursor-pointer">
+                <h3 class="text-sm font-medium text-orange-900 dark:text-orange-100 group-hover:text-orange-800 dark:group-hover:text-orange-50">Import Template</h3>
+                <p class="text-sm text-orange-700 dark:text-orange-300 mt-1">Import from a workspace template</p>
+                <span class="mt-2 inline-block text-sm font-medium text-orange-600 dark:text-orange-400 group-hover:text-orange-500 dark:group-hover:text-orange-300">
+                  Import Template →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Archive Workspaces -->
+        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-6 w-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8l4 4m0 0l4-4m-4 4V4m14 4h-2a2 2 0 01-2-2V4a2 2 0 00-2-2H7a2 2 0 00-2 2v2a2 2 0 01-2 2H1"/>
+              </svg>
+            </div>
+            <div class="ml-3 flex-1">
+              <div class="block group cursor-pointer">
+                <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-gray-50">Archive Management</h3>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">View and manage archived workspaces</p>
+                <span class="mt-2 inline-block text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300">
+                  Manage Archives →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay with blur effect only (no background color) -->
+  <div data-drawer-target="overlay" 
+       data-action="click->drawer#closeOnOverlay"
+       class="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 z-40"
+       style="backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);"></div>
+</div>
