@@ -164,27 +164,27 @@ artifacts_data = [
   {
     workspace: workspaces[0],
     content: artifact_content_infos[0],
-    tags: ["strategy", "product", "roadmap"]
+    tags: [ "strategy", "product", "roadmap" ]
   },
   {
     workspace: workspaces[0],
     content: artifact_content_infos[4],
-    tags: ["decision", "framework", "process"]
+    tags: [ "decision", "framework", "process" ]
   },
   {
     workspace: workspaces[1],
     content: artifact_content_infos[3],
-    tags: ["marketing", "campaign", "q1"]
+    tags: [ "marketing", "campaign", "q1" ]
   },
   {
     workspace: workspaces[2],
     content: artifact_content_infos[1],
-    tags: ["technical", "architecture", "engineering"]
+    tags: [ "technical", "architecture", "engineering" ]
   },
   {
     workspace: workspaces[0],
     content: artifact_content_infos[2],
-    tags: ["research", "users", "insights"]
+    tags: [ "research", "users", "insights" ]
   }
 ]
 
