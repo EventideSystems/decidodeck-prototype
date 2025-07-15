@@ -52,6 +52,9 @@ gem "logidze"
 gem "discard"
 gem "scenic"
 
+# Markdown processing
+gem "redcarpet"
+
 group :development, :test do
   gem "bundle-audit", require: false
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
