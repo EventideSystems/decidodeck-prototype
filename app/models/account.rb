@@ -13,4 +13,8 @@ class Account < ApplicationRecord
   def organizations
     stakeholders.where(type: "Stakeholders::Organization")
   end
+
+  def display_name
+    name
+  end
 end
