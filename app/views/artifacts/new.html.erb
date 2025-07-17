@@ -1,0 +1,50 @@
+<div class="h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="h-full p-6 overflow-y-auto">
+    <!-- Header -->
+    <div class="mb-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center">
+          <%= link_to workspace_artifacts_path(@workspace), class: "mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" do %>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          <% end %>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Create New Artifact
+            </h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Adding to <%= @workspace.name %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Type Selection -->
+    <div class="mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Content Type</h3>
+        <div class="space-y-3">
+          <%= link_to new_workspace_artifact_path(@workspace, content_type: 'ArtifactContent::Note'), 
+                      class: "flex items-center p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 #{'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-600' if @content_type == 'ArtifactContent::Note'}" do %>
+            <div class="flex-shrink-0">
+              <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-medium text-gray-900 dark:text-white">Note</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Create a text note with markdown support</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form based on content type -->
+    <% if @content_type == 'ArtifactContent::Note' %>
+      <%= render 'form_note' %>
+    <% end %>
+  </div>
+</div>

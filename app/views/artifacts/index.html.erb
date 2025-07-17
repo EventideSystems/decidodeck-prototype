@@ -1,0 +1,145 @@
+<div class="h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="h-full p-6 overflow-y-auto">
+    <!-- Header -->
+    <div class="mb-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center">
+          <%= link_to workspace_path(@workspace), class: "mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" do %>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          <% end %>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Artifacts</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              All artifacts in <%= @workspace.name %>
+            </p>
+          </div>
+        </div>
+        
+        <div class="flex space-x-3">
+          <%= link_to new_workspace_artifact_path(@workspace), class: "flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 dark:bg-blue-500 border border-transparent rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800" do %>
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            New Artifact
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifacts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @artifacts.each do |artifact| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md dark:hover:shadow-lg transition-shadow duration-200">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center">
+              <div class="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 rounded-lg flex items-center justify-center text-white font-semibold flex-shrink-0">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-gray-900 dark:text-white">
+                  <%= link_to [@workspace, artifact], class: "hover:text-blue-600 dark:hover:text-blue-400" do %>
+                    <% if artifact.content.respond_to?(:display_name) %>
+                      <%= truncate(artifact.content.display_name, length: 40) %>
+                    <% else %>
+                      Artifact #<%= artifact.id.first(8) %>
+                    <% end %>
+                  <% end %>
+                </h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  <%= artifact.content.class.name.demodulize.humanize %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Preview -->
+          <div class="mb-4">
+            <% if artifact.content.respond_to?(:markdown) && artifact.content.markdown.present? %>
+              <div class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                <%= truncate(strip_tags(markdown(artifact.content.markdown)), length: 120, separator: ' ') %>
+              </div>
+            <% else %>
+              <div class="text-sm text-gray-500 dark:text-gray-500 italic">
+                No preview available
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Tags -->
+          <div class="mb-4">
+            <% if artifact.tags.present? %>
+              <div class="flex flex-wrap gap-1">
+                <% artifact.tags.first(3).each do |tag| %>
+                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400">
+                    <%= tag %>
+                  </span>
+                <% end %>
+                <% if artifact.tags.count > 3 %>
+                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+                    +<%= artifact.tags.count - 3 %>
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center space-x-3">
+              <%= link_to [@workspace, artifact], class: "hover:text-blue-600 dark:hover:text-blue-400" do %>
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+              <% end %>
+              <%= link_to edit_workspace_artifact_path(@workspace, artifact), class: "hover:text-blue-600 dark:hover:text-blue-400" do %>
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              <% end %>
+            </div>
+            <div class="text-xs">
+              <%= time_ago_in_words(artifact.updated_at) %> ago
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Add New Artifact Card -->
+      <%= link_to new_workspace_artifact_path(@workspace), class: "block" do %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 hover:border-gray-400 dark:hover:border-gray-500 transition-colors duration-200 cursor-pointer">
+          <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Create Artifact</h3>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Add a new artifact to this workspace</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Empty State -->
+    <% if @artifacts.empty? %>
+      <div class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No artifacts</h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by creating your first artifact.</p>
+        <div class="mt-6">
+          <%= link_to new_workspace_artifact_path(@workspace), class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800" do %>
+            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            New Artifact
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

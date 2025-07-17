@@ -1,0 +1,27 @@
+<div class="space-y-6">
+  <!-- Title -->
+  <% if note.title.present? %>
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <%= note.title %>
+      </h2>
+    </div>
+  <% end %>
+
+  <!-- Content -->
+  <div class="markdown-content">
+    <%= markdown(note.markdown) %>
+  </div>
+
+  <!-- Note metadata -->
+  <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      </svg>
+      <%- if note.owner.present? %>
+        <span>Owned by <%= note.owner.display_name %></span>
+      <% end %>
+    </div>
+  </div>
+</div>
