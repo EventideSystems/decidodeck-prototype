@@ -115,6 +115,18 @@
   @apply mt-1 mr-2 flex-shrink-0;
 }
 
+.markdown-content .task-list-item-checkbox {
+  @apply mt-1 mr-2 flex-shrink-0 rounded border-gray-300 dark:border-gray-600 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400;
+}
+
+.markdown-content li .task-list-item {
+  @apply list-none flex items-start;
+}
+
+.markdown-content ul li:has(.task-list-item) {
+  @apply list-none;
+}
+
 /* Inline code in different contexts */
 .markdown-content h1 code,
 .markdown-content h2 code,
@@ -213,4 +225,17 @@
 
 .markdown-content-constrained em {
   @apply italic;
+}
+
+/* Task lists for constrained content */
+.markdown-content-constrained .task-list-item {
+  @apply list-none flex items-start;
+}
+
+.markdown-content-constrained .task-list-item-checkbox {
+  @apply mt-0.5 mr-2 flex-shrink-0 rounded border-gray-300 dark:border-gray-600 text-blue-600 dark:text-blue-400 text-xs;
+}
+
+.markdown-content-constrained ul li:has(.task-list-item) {
+  @apply list-none;
 }
