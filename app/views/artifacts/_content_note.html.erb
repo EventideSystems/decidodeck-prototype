@@ -9,7 +9,11 @@
   <% end %>
 
   <!-- Content -->
-  <div class="markdown-content">
+  <div class="markdown-content" 
+       data-controller="task-list" 
+       data-task-list-workspace-id-value="<%= @workspace.id %>"
+       data-task-list-artifact-id-value="<%= @artifact.id %>"
+       data-task-list-content-type-value="<%= @artifact.content.class.name %>">
     <%= markdown(note.markdown) %>
   </div>
 

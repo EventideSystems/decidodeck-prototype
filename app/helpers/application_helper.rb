@@ -53,9 +53,9 @@ module ApplicationHelper
         content = $2
 
         checkbox_html = if checked
-          '<input type="checkbox" class="task-list-item-checkbox" checked disabled>'
+          '<input type="checkbox" class="task-list-item-checkbox" checked data-action="change->task-list#toggle">'
         else
-          '<input type="checkbox" class="task-list-item-checkbox" disabled>'
+          '<input type="checkbox" class="task-list-item-checkbox" data-action="change->task-list#toggle">'
         end
 
         "<li class=\"task-list-item\">#{checkbox_html} #{content}</li>"

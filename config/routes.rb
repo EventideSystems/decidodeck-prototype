@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   resources :people
   resources :stakeholders
   resources :workspaces do
-    resources :artifacts
+    resources :artifacts do
+      member do
+        patch :toggle_task
+      end
+    end
   end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

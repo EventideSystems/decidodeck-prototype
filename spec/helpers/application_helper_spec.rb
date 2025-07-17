@@ -123,8 +123,8 @@ RSpec.describe ApplicationHelper, type: :helper do
 
         expect(result).to include('<input type="checkbox"')
         expect(result).to include('class="task-list-item-checkbox"')
-        expect(result).to include('disabled')
-        expect(result).not_to include('checked disabled')
+        expect(result).to include('data-action="change->task-list#toggle"')
+        expect(result).not_to include('checked data-action')
         expect(result).to include('Unchecked task')
       end
 
@@ -134,8 +134,8 @@ RSpec.describe ApplicationHelper, type: :helper do
 
         expect(result).to include('<input type="checkbox"')
         expect(result).to include('class="task-list-item-checkbox"')
-        expect(result).to include('checked disabled')
-        expect(result).to include('disabled')
+        expect(result).to include('checked')
+        expect(result).to include('data-action="change->task-list#toggle"')
         expect(result).to include('Checked task')
       end
 
@@ -147,7 +147,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(result.scan(/input type="checkbox"/).length).to eq(3)
 
         # Should have 1 checked and 2 unchecked
-        expect(result.scan(/checked disabled/).length).to eq(1)
+        expect(result.scan(/checked/).length).to eq(1)
 
         # Should contain all task text
         expect(result).to include('First task')

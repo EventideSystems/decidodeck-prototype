@@ -76,6 +76,27 @@ class ArtifactsController < ApplicationController
     redirect_to workspace_artifacts_path(@workspace), notice: "Artifact was successfully deleted."
   end
 
+  def toggle_task
+    content_type = params[:content_type]
+    task_index = params[:task_index].to_i
+    checked = params[:checked]
+
+    case content_type
+    when "ArtifactContent::Note"
+      if @artifact.content.is_a?(ArtifactContent::Note)
+        updated_markdown = toggle_task_in_markdown(@artifact.content.markdown, task_index, checked)
+        @artifact.content.update!(markdown: updated_markdown)
+        render json: { success: true }
+      else
+        render json: { error: "Invalid content type" }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: "Unsupported content type" }, status: :unprocessable_entity
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def set_workspace
@@ -92,5 +113,26 @@ class ArtifactsController < ApplicationController
 
   def note_params
     params.require(:artifact_content_note).permit(:title, :markdown)
+  end
+
+  def toggle_task_in_markdown(markdown_text, task_index, checked)
+    lines = markdown_text.split("\n")
+    task_count = 0
+
+    lines.map do |line|
+      if line.match(/^\s*-\s+\[([ x])\]\s+/)
+        if task_count == task_index
+          if checked
+            line.sub(/\[([ ])\]/, "[x]")
+          else
+            line.sub(/\[x\]/, "[ ]")
+          end
+        else
+          line
+        end.tap { task_count += 1 }
+      else
+        line
+      end
+    end.join("\n")
   end
 end
