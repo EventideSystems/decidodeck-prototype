@@ -1,6 +1,5 @@
 class Workspace < ApplicationRecord
-  include Discard::Model
-
+  has_discard
   has_logidze
 
   belongs_to :account

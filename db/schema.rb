@@ -39,22 +39,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
     t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'archived'::character varying]::text[])", name: "accounts_valid_status"
   end
 
-  create_table "artifact_content_infos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "artifact_content_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", default: "", null: false
+    t.string "markdown"
+    t.string "note_type", default: "text", null: false
     t.string "owner_type", null: false
     t.uuid "owner_id", null: false
-    t.string "markdown"
+    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
-    t.index ["owner_type", "owner_id"], name: "index_artifact_content_infos_on_owner"
+    t.index ["owner_type", "owner_id"], name: "index_artifact_content_notes_on_owner"
   end
 
   create_table "artifacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "position", default: 0, null: false
+    t.string "tags", default: [], array: true
     t.uuid "workspace_id", null: false
     t.string "content_type", null: false
     t.uuid "content_id", null: false
-    t.integer "position", default: 0, null: false
-    t.string "tags", default: [], array: true
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -914,8 +917,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
   create_trigger :logidze_on_artifacts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_artifacts BEFORE INSERT OR UPDATE ON public.artifacts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_artifact_content_infos, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_artifact_content_infos BEFORE INSERT OR UPDATE ON public.artifact_content_infos FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  create_trigger :logidze_on_artifact_content_notes, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_artifact_content_notes BEFORE INSERT OR UPDATE ON public.artifact_content_notes FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 
   create_view "people", sql_definition: <<-SQL

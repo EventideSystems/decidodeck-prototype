@@ -1,5 +1,5 @@
 class Account < ApplicationRecord
-  include Discard::Model
+  has_discard
   has_logidze
 
   has_many :workspaces, dependent: :destroy

@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  include Discard::Model
+  has_discard
   has_logidze
 
   enum :status, { active: "active",  suspended: "suspended", archived: "archived" }

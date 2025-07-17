@@ -1,4 +1,4 @@
-## Decidodek Philosophy
+## Decidodeck Philosophy
 
 The Decidodeck philosophy holds that **strategy is not neutral**, and changemaking must account for what aches, drifts and contradicts along the way. It draws on hauntology, dialectics and liberatory pedagogy to build a planning environment that honours emotion, tension and emergence — not just logic and delivery.
 
@@ -43,29 +43,29 @@ We don't say “we value simplicity” - we design for **clarity without erasure
 
 ### Principles
 
-**Decidodek is built for those who refuse to pretend that change is tidy.**
+**Decidodeck is built for those who refuse to pretend that change is tidy.**
 
-We believe that every strategy carries ghosts: of forgotten desires, missed outcomes, and contradictions too complex to diagram. Decidodek doesn't erase these - it names them. It is a tool for **navigating complexity without flattening it**, for **mapping what aches as much as what succeeds**.
+We believe that every strategy carries ghosts: of forgotten desires, missed outcomes, and contradictions too complex to diagram. Decidodeck doesn't erase these - it names them. It is a tool for **navigating complexity without flattening it**, for **mapping what aches as much as what succeeds**.
 
 This platform was born from a frustration with traditional strategic tools that prized clarity over care, and linear logic over lived experience. We wanted something different - something that treats planning as a form of **collective sense-making**, not project management theater.
 
-So we designed Decidodek around four core principles:
+So we designed Decidodeck around four core principles:
 
 ### 1. **Strategy is Emotional**
 
-Behind every output is a longing. Behind every drifted deliverable, a story. Decidodek treats emotions not as noise, but as data - honoring grief, tension, joy, and refusal as vital signals in the work of change.
+Behind every output is a longing. Behind every drifted deliverable, a story. Decidodeck treats emotions not as noise, but as data - honoring grief, tension, joy, and refusal as vital signals in the work of change.
 
 ### 2. **Contradictions Are the Path**
 
-We don't hide tensions; we hold them. From conflicting stakeholder desires to paradoxes in power and purpose, Decidodek lets teams make contradictions visible - then navigate through them with honesty and creativity.
+We don't hide tensions; we hold them. From conflicting stakeholder desires to paradoxes in power and purpose, Decidodeck lets teams make contradictions visible - then navigate through them with honesty and creativity.
 
 ### 3. **Tools Are Invitations, Not Instructions**
 
-No template is sacred. Decidodek is a toolkit of détourned planning forms - where metrics can be mourned, OKRs reimagined, and logic models softened into rituals of care. Everything is remixable. Everything is alive.
+No template is sacred. Decidodeck is a toolkit of détourned planning forms - where metrics can be mourned, OKRs reimagined, and logic models softened into rituals of care. Everything is remixable. Everything is alive.
 
 ### 4. **Learning Is Ongoing, Situated, and Shared**
 
-Theories of Change must adapt with time, people, and place. Decidodek is designed for **strategies that evolve**, with features that track drift, record soft failures, and surface what no longer fits - without shame.
+Theories of Change must adapt with time, people, and place. Decidodeck is designed for **strategies that evolve**, with features that track drift, record soft failures, and surface what no longer fits - without shame.
 
 ### Mark Fisher, Our Patron Saint
 

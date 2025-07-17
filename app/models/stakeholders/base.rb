@@ -2,6 +2,7 @@
 class Stakeholders::Base < ApplicationRecord
   self.table_name = "stakeholders"
 
+  has_discard
   has_logidze
 
   belongs_to :account, class_name: "Account"

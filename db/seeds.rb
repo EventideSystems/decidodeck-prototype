@@ -125,37 +125,42 @@ stakeholders_data.each do |stakeholder_attrs|
 end
 
 # Create example artifact content infos
-artifact_content_infos_data = [
+artifact_content_notes_data = [
   {
     owner: account,
+    title: "Product Roadmap 2025",
     markdown: "# Project Overview\n\nThis document outlines the strategic direction and key objectives for our product roadmap in 2025.\n\n## Key Goals\n- Improve user engagement by 40%\n- Reduce time-to-value for new users\n- Expand market reach"
   },
   {
     owner: account,
+    title: "Technical Architecture",
     markdown: "# Technical Architecture\n\n## System Components\n\n### Frontend\n- React with TypeScript\n- Tailwind CSS for styling\n- Vite for build tooling\n\n### Backend\n- Ruby on Rails API\n- PostgreSQL database\n- Redis for caching"
   },
   {
     owner: account,
+    title: "User Research Findings",
     markdown: "# User Research Findings\n\n## Executive Summary\n\nOur recent user research revealed several key insights about user behavior and preferences.\n\n## Key Findings\n1. Users prefer simplified navigation\n2. Mobile experience needs improvement\n3. Onboarding process is too complex"
   },
   {
     owner: account,
+    title: "Marketing Strategy Q1",
     markdown: "# Marketing Strategy Q1\n\n## Campaign Objectives\n- Increase brand awareness\n- Generate qualified leads\n- Drive product adoption\n\n## Target Channels\n- Social media campaigns\n- Content marketing\n- Partner collaborations"
   },
   {
     owner: account,
+    title: "Decision Framework",
     markdown: "# Decision Framework\n\n## Evaluation Criteria\n\n### Technical Feasibility\n- Implementation complexity\n- Resource requirements\n- Timeline constraints\n\n### Business Impact\n- Revenue potential\n- Market opportunity\n- Competitive advantage"
   }
 ]
 
-artifact_content_infos = []
-artifact_content_infos_data.each_with_index do |info_attrs, index|
-  info = ArtifactContent::Info.find_or_create_by!(
+artifact_content_notes = []
+artifact_content_notes_data.each_with_index do |info_attrs, index|
+  note = ArtifactContent::Note.find_or_create_by!(
     owner: info_attrs[:owner],
     markdown: info_attrs[:markdown]
   )
-  artifact_content_infos << info
-  puts "✅ Created artifact content info #{index + 1}: #{info.display_name}"
+  artifact_content_notes << note
+  puts "✅ Created artifact content info #{index + 1}: #{note.display_name}"
 end
 
 # Create example artifacts
@@ -163,27 +168,27 @@ workspaces = account.workspaces.to_a
 artifacts_data = [
   {
     workspace: workspaces[0],
-    content: artifact_content_infos[0],
+    content: artifact_content_notes[0],
     tags: [ "strategy", "product", "roadmap" ]
   },
   {
     workspace: workspaces[0],
-    content: artifact_content_infos[4],
+    content: artifact_content_notes[4],
     tags: [ "decision", "framework", "process" ]
   },
   {
     workspace: workspaces[1],
-    content: artifact_content_infos[3],
+    content: artifact_content_notes[3],
     tags: [ "marketing", "campaign", "q1" ]
   },
   {
     workspace: workspaces[2],
-    content: artifact_content_infos[1],
+    content: artifact_content_notes[1],
     tags: [ "technical", "architecture", "engineering" ]
   },
   {
     workspace: workspaces[0],
-    content: artifact_content_infos[2],
+    content: artifact_content_notes[2],
     tags: [ "research", "users", "insights" ]
   }
 ]
@@ -209,4 +214,4 @@ puts "  - 1 demo user"
 puts "  - 1 demo account (#{account.name})"
 puts "  - #{account.workspaces.count} sample workspaces"
 puts "  - #{account.workspaces.map(&:artifacts).flatten.count} artifacts"
-puts "  - #{artifact_content_infos.count} artifact content infos"
+puts "  - #{artifact_content_notes.count} artifact content infos"

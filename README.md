@@ -8,15 +8,15 @@
 
 ## Overview
 
-**Decidodek** is an open-source change management platform that helps teams and organizations design, adapt, and reflect on complex Theories of Change. It combines traditional outcome-mapping methods with innovative facilitation tools to hold nuance, surface contradictions, and track alignment over time.
+**Decidodeck** is an open-source change management platform that helps teams and organizations design, adapt, and reflect on complex Theories of Change. It combines traditional outcome-mapping methods with innovative facilitation tools to hold nuance, surface contradictions, and track alignment over time.
 
-While many tools emphasize logic models and fixed plans, Decidodek is built for **fluidity, emergence, and adaptive learning**. It's particularly useful when strategies must evolve in response to shifting conditions, power dynamics, or stakeholder needs.
+While many tools emphasize logic models and fixed plans, Decidodeck is built for **fluidity, emergence, and adaptive learning**. It's particularly useful when strategies must evolve in response to shifting conditions, power dynamics, or stakeholder needs.
 
-## Why Decidodek?
+## Why Decidodeck?
 
 Most Theory of Change processes aim to map how change is expected to happen. But in complex systems, **change doesn't always follow a linear path** - and the assumptions beneath our models can drift.
 
-Decidodek introduces a structured-yet-flexible environment to:
+Decidodeck introduces a structured-yet-flexible environment to:
 
 - Make assumptions and causal pathways explicit
 - Track emotional and strategic alignment over time
@@ -41,7 +41,7 @@ Decidodek introduces a structured-yet-flexible environment to:
 - **Tool and Process Registry**  
   Store, remix, and document frameworks used across your organization
 
-## Who is Decidodek For?
+## Who is Decidodeck For?
 
 - Strategy and program evaluation professionals working in complex systems  
 - Funders and grantees seeking participatory evaluation methods  
@@ -50,9 +50,9 @@ Decidodek introduces a structured-yet-flexible environment to:
 
 ## Philosophy
 
-Decidodek is not just a tool - it's a refusal to treat change as tidy or neutral. We believe strategy is emotional, contradiction is generative, and learning is never linear.
+Decidodeck is not just a tool - it's a refusal to treat change as tidy or neutral. We believe strategy is emotional, contradiction is generative, and learning is never linear.
 
-Instead of chasing clarity for its own sake, Decidodek holds space for complexity and desire. It helps teams map not only what they aim to do - but also what they're not willing to betray in the process.
+Instead of chasing clarity for its own sake, Decidodeck holds space for complexity and desire. It helps teams map not only what they aim to do - but also what they're not willing to betray in the process.
 
 This is strategy with care. With contradiction. With ghosts. [Read the full document →](/doc/PHILOSOPHY.md)
 

@@ -9,7 +9,7 @@
       <div class="ml-3">
         <h3 class="text-lg font-medium text-gray-900 dark:text-white">
           <% if artifact.content.respond_to?(:display_name) %>
-            <%= artifact.content.display_name %>
+            <%= markdown(artifact.content.display_name) %>
           <% else %>
             Artifact #<%= artifact.id.first(8) %>
           <% end %>
