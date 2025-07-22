@@ -1,7 +1,7 @@
 class ArtifactsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_workspace
-  before_action :set_artifact, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_artifact, only: [ :show, :edit, :update, :destroy, :toggle_task ]
 
   def index
     @artifacts = @workspace.artifacts.includes(:content)

@@ -10,6 +10,6 @@ class ArtifactContent::Note < ApplicationRecord
   validates :markdown, presence: true
 
   def display_name
-    title.presence || markdown.truncate(50)
+    title.presence || markdown.lines.first.truncate(50)
   end
 end
