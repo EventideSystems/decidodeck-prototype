@@ -19,11 +19,15 @@ class User < ApplicationRecord
   # add `current_sign_in_ip` and `last_sign_in_ip` to the database schema if you want to track them.
   attr_accessor :current_sign_in_ip, :last_sign_in_ip
 
-  private
-
   def active_for_authentication?
     super && active? && !discarded?
   end
+
+  def short_name
+    email.split("@").first
+  end
+
+  private
 
   def primary_account
     accounts.first

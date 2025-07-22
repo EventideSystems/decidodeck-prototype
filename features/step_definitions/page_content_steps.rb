@@ -8,7 +8,7 @@ Then('I should not see {string}') do |text|
 end
 
 Then('I should see the current user information') do
-  expect(page).to have_content(@user.email)
+  expect(page).to have_content(@user.short_name)
 end
 
 Then('the page should be fully loaded') do
