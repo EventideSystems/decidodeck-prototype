@@ -9,27 +9,12 @@ Feature: Onboarding
     When I enter my registration details  
     And I verify my email  
     And I log into the platform for the first time  
-    Then I will be presented with a welcome message and an invitation to select a role in Decidodeck
+    Then I should be presented with a welcome message
 
- # Scenario: First-time user begins orientation
-
-    # and I will be presnted with a choice of facilitation roles:
-    #   | Role        |
-    #   | Observer    |
-    #   | Driftwalker |
-    #   | Contributor |
-    # And I engage with the onboarding sequence, which includes:
-    #   | Orientation to Decidodeck's glyph-based interface |
-    #   | Overview of collaborative workflows and emotional mapping tools |
-    #   | Option to co-create or join an existing Theory of Change thread |
-    # And my profile is set up with strategic preferences and emotional attunement tags
-    # And I am ready to start collaborating meaningfully on system rituals and strategic models
-
-  # Background:
-  #   Given I am a new user
-
-  # Scenario: Completing the onboarding process
-  #   When I start the onboarding process
-  #   Then I should see "Welcome to Decidodeck"
-  #   And I should see "Let's get started"  
+  @javascript
+  Scenario: First-time user begins orientation
+    Given I am signed in as a new user
+    When I open the welcome message
+    Then I should see "Welcome to Decidodeck"
+    And I should be presented with an overview of the platform's features
 

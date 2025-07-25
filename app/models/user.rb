@@ -27,6 +27,10 @@ class User < ApplicationRecord
     email.split("@").first
   end
 
+  def display_name
+    name.present? ? name : short_name
+  end
+
   private
 
   def primary_account

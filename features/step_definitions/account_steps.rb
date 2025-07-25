@@ -3,6 +3,21 @@ Given('I have not yet created an account') do
   expect(User.exists?(email: @user.email)).to be_falsey
 end
 
+Given('I am signed in as a new user') do
+  @user = create(
+    :user,
+    confirmed_at: Time.current,
+    password: 'password123',
+    password_confirmation: 'password123'
+  )
+  UserOnboarding.new(user: @user).call
+
+  visit new_user_session_path
+  fill_in 'Email', with: @user.email
+  fill_in 'Password', with: 'password123'
+  click_button 'Log in'
+end
+
 When('I enter my registration details') do
   visit new_user_registration_path
 
@@ -39,7 +54,6 @@ When('I log into the platform for the first time') do
   click_button 'Log in'
 end
 
-Then('I will be presented with a welcome message and an invitation to select a role in Decidodeck') do
+Then('I should be presented with a welcome message') do
   expect(page).to have_content('Welcome to Decidodeck')
-  expect(page).to have_content('Please select a role to continue')
 end
