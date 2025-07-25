@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_25_084242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "account_members", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "user_id"], name: "index_account_members_on_account_id_and_user_id", unique: true
+    t.index ["account_id"], name: "index_account_members_on_account_id"
+    t.index ["user_id"], name: "index_account_members_on_user_id"
+  end
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.citext "name", null: false
@@ -140,9 +150,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by"
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["status"], name: "index_users_on_status"
@@ -168,6 +189,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
     t.check_constraint "workspace_type::text = ANY (ARRAY['project'::character varying, 'program'::character varying, 'department'::character varying, 'initiative'::character varying, 'template'::character varying]::text[])", name: "workspaces_valid_type"
   end
 
+  add_foreign_key "account_members", "accounts"
+  add_foreign_key "account_members", "users"
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "artifacts", "workspaces"
   add_foreign_key "stakeholders", "accounts"

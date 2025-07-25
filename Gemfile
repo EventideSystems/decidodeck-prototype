@@ -44,6 +44,7 @@ gem "thruster", require: false
 
 # Authentication and authorization
 gem "devise", "~> 4.9"
+gem "devise_invitable"
 gem "pundit", "~> 2.5"
 
 # Database-related gems
