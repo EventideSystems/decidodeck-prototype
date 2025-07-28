@@ -14,6 +14,6 @@ class UserPolicy < ApplicationPolicy # rubocop:disable Style/Documentation
   end
 
   def invite?
-    create?
+    admin? || account_owner?
   end
 end

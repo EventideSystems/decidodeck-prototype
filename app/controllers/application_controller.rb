@@ -5,48 +5,36 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :authenticate_user!
-  before_action :set_current_account
   before_action :set_current_workspace
 
-  protected
-
-  def current_account
-    @current_account
+  def pundit_user
+    UserContext.new(current_user, current_workspace)
   end
-  helper_method :current_account
+
+  protected
 
   def current_workspace
     @current_workspace
   end
   helper_method :current_workspace
 
+  def current_account
+    current_workspace&.account
+  end
+  helper_method :current_account
+
   private
 
-  def set_current_account
-    return unless user_signed_in?
-
-    # Try to get account from session first (for account switching)
-    if session[:current_account_id].present?
-      @current_account = current_user.accounts.find_by(id: session[:current_account_id])
-    end
-
-    # Fallback to user's first account if no session account or if account not found
-    @current_account ||= current_user.accounts.first
-
-    # Update session to track current account
-    session[:current_account_id] = @current_account&.id
-  end
-
   def set_current_workspace
-    return unless current_account
+    return unless current_user && current_user.available_workspaces.any?
 
     # Try to get workspace from session first (for workspace switching)
     if session[:current_workspace_id].present?
-      @current_workspace = current_account.workspaces.find_by(id: session[:current_workspace_id])
+      @current_workspace = current_user.available_workspaces.find_by(id: session[:current_workspace_id])
     end
 
-    # Fallback to account's first workspace if no session workspace or if workspace not found
-    @current_workspace ||= current_account.workspaces.first
+    # Fallback to user's first workspace if no session workspace or if workspace not found
+    @current_workspace ||= current_user.workspaces.first
 
     # Update session to track current workspace
     session[:current_workspace_id] = @current_workspace&.id

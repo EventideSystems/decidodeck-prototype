@@ -2,6 +2,7 @@
 Given('I am signed in as a user') do
   @user = create(:user)
   @account = create(:account, owner: @user)
+  @workspace = create(:workspace, account: @account, name: 'Test Workspace')
 
   # Use Capybara to sign in through the UI for feature tests
   visit new_user_session_path

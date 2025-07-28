@@ -1,12 +1,34 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_reader :user, :record
+  class Scope
+    attr_reader :user_context, :scope
 
-  def initialize(user, record)
-    @user = user
-    @record = record
+    delegate :user, :workspace, to: :user_context, prefix: :current
+
+    def initialize(user_context, scope)
+      @user_context = user_context
+      @scope = scope
+    end
+
+    def resolve
+      raise NoMethodError, "You must define #resolve in #{self.class}"
+    end
+
+    private
+
+     attr_reader :user_context, :record
   end
+
+  attr_reader :user_context, :record
+
+  delegate :user, :workspace, to: :user_context, prefix: :current
+
+  def initialize(user_context, record)
+    @user_context = user_context
+    @record       = record
+  end
+
 
   def index?
     false
@@ -36,18 +58,12 @@ class ApplicationPolicy
     false
   end
 
-  class Scope
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
+  private
 
-    def resolve
-      raise NoMethodError, "You must define #resolve in #{self.class}"
-    end
-
-    private
-
-    attr_reader :user, :scope
+  def account_owner?
+    user_context.account.owner == user_context.user
+  end
+  def admin?
+    user_context.admin?
   end
 end
