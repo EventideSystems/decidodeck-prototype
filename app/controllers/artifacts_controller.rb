@@ -38,9 +38,9 @@ class ArtifactsController < ApplicationController
         @artifact.content = @content
         @artifact.save!
 
-        redirect_to [ @workspace, @artifact ], notice: "Artifact was successfully created."
+        redirect_to [ @workspace, @artifact ], notice: "✅ Artifact was successfully created!"
       else
-        redirect_to workspace_artifacts_path(@workspace), alert: "Invalid content type"
+        redirect_to workspace_artifacts_path(@workspace), alert: "❌ Invalid content type"
       end
     end
   rescue ActiveRecord::RecordInvalid
@@ -62,9 +62,9 @@ class ArtifactsController < ApplicationController
       when ArtifactContent::Note
         @artifact.content.update!(note_params)
         @artifact.update!(artifact_params)
-        redirect_to [ @workspace, @artifact ], notice: "Artifact was successfully updated."
+        redirect_to [ @workspace, @artifact ], notice: "✅ Artifact was successfully updated."
       else
-        redirect_to [ @workspace, @artifact ], alert: "Unsupported content type for editing"
+        redirect_to [ @workspace, @artifact ], alert: "⚠️ Unsupported content type for editing"
       end
     end
   rescue ActiveRecord::RecordInvalid
@@ -73,7 +73,7 @@ class ArtifactsController < ApplicationController
 
   def destroy
     @artifact.discard
-    redirect_to workspace_artifacts_path(@workspace), notice: "Artifact was successfully deleted."
+    redirect_to workspace_artifacts_path(@workspace), notice: "🗑️ Artifact was successfully deleted."
   end
 
   def toggle_task
