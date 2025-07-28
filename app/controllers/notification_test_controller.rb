@@ -4,16 +4,16 @@ class NotificationTestController < ApplicationController
   end
 
   def create
-    notification_type = params[:type] || 'info'
-    
+    notification_type = params[:type] || "info"
+
     case notification_type
-    when 'success'
+    when "success"
       success_notification("✅ Operation completed successfully!")
-    when 'error'
+    when "error"
       error_notification("❌ Something went wrong! Please try again.")
-    when 'warning'
+    when "warning"
       warning_notification("⚠️ Please check your input and try again.")
-    when 'info'
+    when "info"
       info_notification("ℹ️ Here's some helpful information.")
     end
 

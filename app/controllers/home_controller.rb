@@ -2,7 +2,7 @@
 
 class HomeController < ApplicationController
   include FlashNotifications
-  
+
   skip_before_action :authenticate_user!
 
   layout :determine_layout

@@ -6,9 +6,9 @@ module FlashNotifications
   def add_flash_notification(type, message, duration: nil)
     # Set default duration based on type if not specified
     duration ||= case type.to_s
-    when 'error', 'alert'
+    when "error", "alert"
       8000
-    when 'warning'
+    when "warning"
       6000
     else
       5000
@@ -20,10 +20,10 @@ module FlashNotifications
         "flash-notifications",
         render_to_string(
           partial: "shared/flash_notification",
-          locals: { 
-            type: type, 
-            message: message, 
-            duration: duration 
+          locals: {
+            type: type,
+            message: message,
+            duration: duration
           }
         )
       )

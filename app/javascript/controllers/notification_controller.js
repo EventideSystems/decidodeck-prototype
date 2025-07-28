@@ -8,7 +8,7 @@ export default class extends Controller {
     message: String,
     duration: { type: Number, default: 5000 },
     dismissible: { type: Boolean, default: true },
-    allowBrowserNotification: { type: Boolean, default: false }
+    allowBrowserNotification: { type: Boolean, default: true }
   }
 
   connect() {

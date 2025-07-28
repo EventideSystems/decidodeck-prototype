@@ -37,7 +37,6 @@
           <!-- Navigation Links -->
           <div class="hidden md:flex items-center space-x-6">
             <%= link_to "Workspace", root_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
-            <%= link_to (current_account.workspaces.count > 1 ? 'Workspaces' : 'Workspace'), root_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
             <%= link_to "People", people_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
             <%= link_to "Library", people_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
             <%#= link_to "Settings", edit_user_registration_path, class: "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition duration-200" %>
