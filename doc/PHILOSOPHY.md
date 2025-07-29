@@ -73,7 +73,7 @@ Theories of Change must adapt with time, people, and place. Decidodeck is design
 
 If Decidodeck had a candlelit altar, **Mark Fisher** would be there - not as an idol, but as a presence: the patron saint of *hauntings we refuse to ignore*.
 
-He reminds us that every theory of change worth building must first reckon with what's missing - what's been privatized, disavowed, or rendered unthinkable. Fisher didn't just critique capitalism; he held space for the **emotional fallout** it leaves behind: the “depressive hedonia,” the malaise, the ache for futures that feel increasingly foreclosed.
+He reminds us that every theory of change worth building must first reckon with what's missing - what's been privatized, disavowed, or rendered unthinkable. Fisher didn't just critique capitalism; he held space for the **emotional fallout** it leaves behind: the "depressive hedonia", the malaise, the ache for futures that feel increasingly foreclosed.
 
 As patron saint, Fisher doesn't give us answers - he gives us **frames of refusal**. His legacy in Decidodeck isn't just conceptual; it's infrastructural. You'll find him in:
 
@@ -82,9 +82,9 @@ As patron saint, Fisher doesn't give us answers - he gives us **frames of refusa
 - **Drift Signals** that honor where strategy slips away from desire
 - **Ritual Cards** that invite us to mourn not as weakness, but as method
 
-> “The slow cancellation of the future,” he wrote - not to despair, but to call us to **reopen temporalities** thought lost.
+> Mark Fisher draws our attention to "the slow cancellation of the future" - not to despair, but to urge us to rediscover and reclaim the timelines and possibilities we’ve stopped imagining.
 
-Fisher haunts our architecture to protect postcapitalist dreams from being flattened into agile deliverables. He blesses our contradictions. He sanctifies the ache. He reminds us that ***any viable map must be haunted***.
+Fisher haunts our architecture to protect postcapitalist dreams from being flattened into agile deliverables. He blesses our contradictions. He sanctifies the ache. He reminds us that ***any viable map must be haunted***, that any serious attempt at navigating the future must acknowledge what’s been lost, suppressed, or unspoken.
 
 
 
