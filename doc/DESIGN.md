@@ -1,8 +1,8 @@
 ## Decidodeck Design
 
-Traditional Theory of Change tools 
+Traditional Theory of Change (ToC) tools can be characterized as diagram-centric planning frameworks that prioritize clarity, linearity, and institutional legibility. 
 
-Traditional Theory of Change (ToC) tools can be characterized as diagram-centric planning frameworks that prioritize clarity, linearity, and institutional legibility. They’re often designed to meet the needs of funders, evaluators, and program managers—less so the emotional, relational, or emergent dimensions of change.
+They’re often designed to meet the needs of funders, evaluators, and program managers—less so the emotional, relational, or emergent dimensions of change.
 
 Deci
 
