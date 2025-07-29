@@ -33,15 +33,19 @@ Decidodeck creates a clear yet adaptable space where teams can:
 ## Core Features
 
 - **Shared Workspaces**
+
   Work collaboratively in a common space where your team can build strategy, stay aligned on goals, and make decisions collaboratively as things evolve.
 
 - **Stakeholder Management**
+
   Identify and understand the people and organizations that matter to your strategy, their connections, influences, potential conflicts and opportunities for collaboration. 
 
 - **Outcome Mapping + Drift Tracking**
+
   Track how your intended outcomes evolve over time - spot where things stay aligned, and where they begin to shift, stretch, or stray.
 
 - **Tool and Process Library**  
+
   Store, remix, and document frameworks used across your organization. Choose the right tools for the moment, adapt as needed, and keep evolving practice within your team.
 
 For more details, refer to our [design documentation →](/doc/DESIGN.md)
