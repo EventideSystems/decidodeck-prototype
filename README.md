@@ -63,5 +63,7 @@ This is strategy with care. With contradiction. With ghosts. [Read the full docu
 
 ## Get Involved
 
-Decidodeck welcomes contributors from design, strategy, and open-source backgrounds. All source code and design documentation are available for adaptation and reuse. 
+Decidodeck welcomes contributors from design, strategy, and open-source backgrounds. All source code and design documentation are available for adaptation and reuse.
+
+Before contributing, please familiarize yourself with the project's [License](LICENSE) and [Code of Conduct](/doc/CODE_OF_CONDUCT.md).
 
