@@ -4,7 +4,7 @@ Traditional Theory of Change tools can be characterized as diagram-centric plann
 
 Decidodeck offers an alternative, replacing linear diagrams with a system of small, interoperable tools and processes that capture emotional nuance, contradiction, and systemic complexity.
 
-The platform is built around three core architectural elements: Workspaces, People, and the Tool Library. These components are deeply interconnected and continually shaped by a dynamic layer of user-generated glyphs, which serve as the expressive medium linking strategy, emotion, and collaboration.
+The platform is built around three core architectural elements: **Workspaces**, **People**, and the **Tool Library**. These components are deeply interconnected and continually shaped by a dynamic layer of user-generated **glyphs**, which serve as the expressive medium linking strategy, emotion, and collaboration.
 
 ### Workspaces
 
