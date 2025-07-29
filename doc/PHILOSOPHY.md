@@ -1,6 +1,6 @@
 ## Decidodeck Philosophy
 
-The Decidodeck philosophy holds that **strategy is not neutral**, and changemaking must account for what aches, drifts and contradicts along the way. It draws on hauntology, dialectics and liberatory pedagogy to build a planning environment that honours emotion, tension and emergence — not just logic and delivery.
+The Decidodeck philosophy holds that **strategy is not neutral**, and changemaking must account for what aches, drifts and contradicts along the way. It draws on hauntology, dialectics and liberatory pedagogy to build a planning environment that honours emotion, tension and emergence - not just logic and delivery.
 
 Instead of pretending change is linear or tidy, Decidodeck invites practitioners to map *desires*, surface *contradictions*, ritualise *refusal*, and track outcomes that might ghost, soften or transform. It treats strategy as collective sense-making, not administrative theatre.
 
