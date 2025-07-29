@@ -1,10 +1,16 @@
 ## Decidodeck Design
 
+### Overview
+
 Traditional Theory of Change tools can be characterized as diagram-centric planning frameworks that prioritize clarity, linearity, and institutional legibility. 
 
 Decidodeck offers an alternative, replacing linear diagrams with a system of small, interoperable tools and processes that capture emotional nuance, contradiction, and systemic complexity.
 
-The platform is built around three core architectural elements: **Workspaces**, **People**, and the **Tool Library**. These components are deeply interconnected and continually shaped by a dynamic layer of user-generated **glyphs**, which serve as the expressive medium linking strategy, emotion, and collaboration.
+The platform is built around three core architectural elements: **Workspaces**, **People**, and the **Tool Library**. These components are deeply interconnected and continually shaped by a dynamic layer of user-generated glyphs, which serve as the expressive medium linking strategy, emotion, and collaboration.
+
+The architecture of the platform is guided by a set of **General Design Principles**, ensuring that accessibility, privacy, and other essential constraints are consistently upheld.
+
+![User Interface](/doc/user_interface.png)
 
 ### Workspaces
 
@@ -67,4 +73,41 @@ Each tool, artifact, document, or stakeholder record becomes a vessel for glyphi
 Glyphs serve not only as symbolic markers but as connective tissue, linking decisions, roles, and tools into a non-linear map of collaborative change.
 
 Conventional markup systems - like tags or subsystem identifiers - tend to operate within declarative boundaries. They sort, categorize, and locate, often privileging clarity and efficiency over ambiguity or affect. While the glyph system in Decidoeck can be used in this way, it is intended to evoke rather than define. Applying a glyph within Decidodeck introduces a kind of semantic and emotional "weight", less a system of classification than a trace of where grief, fear, and joy are embedded in a team’s strategic memory.
+
+### General Design Principles
+
+#### 🧠 Cognitive Accessibility
+- Use clear, concise language and predictable layouts.
+- Support memory and comprehension with visual cues, summaries, and progressive disclosure.
+- Avoid overwhelming users with dense information or rapid interactions.
+
+#### 🌍 Cultural & Linguistic Sensitivity
+- Design for multilingual contexts and varying literacy levels.
+- Avoid idioms or metaphors that may not translate across cultures.
+- Consider symbolic systems (like glyphs) that transcend language barriers.
+
+#### 🧩 Assistive Technology Compatibility
+- Ensure compatibility with screen readers, voice navigation, and alternative input devices.
+- Avoid custom UI components that break semantic structure or keyboard navigation.
+
+#### 🌀 Emotional & Affective Design
+- Honor emotional states like grief, refusal, or longing as valid entry points.
+- Use symbolic affordances (e.g. glyphs, fog zones) to hold space for ambiguity and resonance.
+- Avoid overly rational or utilitarian flows that flatten emotional nuance.
+
+#### 📱 **Device & Context Responsiveness
+- Design for varied screen sizes, input methods, and environmental conditions.
+- Consider low-bandwidth or offline access constraints.
+- Ensure legibility and usability in bright light, motion, or fatigue contexts.
+
+#### 🔐 Privacy & Consent Design
+- Make data collection transparent and ritualized (e.g. glyph-marked thresholds).
+- Avoid dark patterns or manipulative UX.
+- Offer meaningful opt-in/opt-out mechanisms.
+
+#### 🧭 Strategic Memory & Traceability
+- Enable traceable lineage of decisions, contradictions, and emotional imprints.
+- Use glyphs or symbolic markers to encode strategic weight and memory.
+- Avoid ephemeral or unanchored interactions that erase context.
+
 
