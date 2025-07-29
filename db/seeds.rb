@@ -4,7 +4,7 @@
 
 puts "🌱 Seeding development data..."
 
-# Create example user
+# Create example users
 user = User.find_or_create_by!(email: "demo@decidodeck.com") do |u|
   u.password = "password123"
   u.password_confirmation = "password123"
@@ -12,6 +12,15 @@ user = User.find_or_create_by!(email: "demo@decidodeck.com") do |u|
   u.name = "Demo User"
   u.status = "active"
   puts "✅ Created demo user: #{u.email}"
+end
+
+collaborator = User.find_or_create_by!(email: "alex.smith@decidodeck.com") do |u|
+  u.password = "password123"
+  u.password_confirmation = "password123"
+  u.confirmed_at = Time.current
+  u.name = "Alex Smith"
+  u.status = "active"
+  puts "✅ Created collaborator user: #{u.email}"
 end
 
 # Create example account
@@ -25,6 +34,16 @@ account = Account.find_or_create_by!(name: "Demo Company") do |a|
   a.max_workspaces = 3
   puts "✅ Created demo account: #{a.name}"
 end
+
+# Add collaborator as account member
+AccountMember.find_or_create_by!(
+  account: account,
+  user: collaborator
+) do |am|
+  puts "✅ Added #{collaborator.name} as collaborator to #{account.name}"
+end
+
+
 
 # Create example workspace
 Workspace.find_or_create_by!(
@@ -206,11 +225,12 @@ end
 puts "🎉 Seeding completed!"
 puts ""
 puts "Demo credentials:"
-puts "  Email: demo@decidodeck.com"
+puts "  Owner: demo@decidodeck.com"
+puts "  Collaborator: alex.smith@decidodeck.com"
 puts "  Password: password123"
 puts ""
 puts "Created:"
-puts "  - 1 demo user"
+puts "  - 2 demo users (1 owner + 1 collaborator)"
 puts "  - 1 demo account (#{account.name})"
 puts "  - #{account.workspaces.count} sample workspaces"
 puts "  - #{account.workspaces.map(&:artifacts).flatten.count} artifacts"

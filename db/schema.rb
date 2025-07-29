@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_084242) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -149,7 +149,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_084242) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "log_data"
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -158,6 +157,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_084242) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.jsonb "log_data"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -945,34 +945,56 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_084242) do
   SQL
 
   create_view "people", sql_definition: <<-SQL
-      SELECT id,
-      name,
-      description,
-      status,
-      email,
-      phone,
-      address,
-      website,
-      first_name,
-      last_name,
-      job_title,
-      birth_date,
-      legal_name,
-      organization_type,
-      industry,
-      employee_count,
-      founded_date,
-      stakeholder_type,
-      influence_level,
-      interest_level,
-      priority_score,
-      account_id,
+      SELECT stakeholders.id,
+      stakeholders.account_id,
+      stakeholders.type AS linked_resource_type,
+      stakeholders.id AS linked_resource_id,
+      COALESCE(stakeholders.name, stakeholders.legal_name, ((((stakeholders.first_name)::text || ' '::text) || (stakeholders.last_name)::text))::character varying) AS name,
+      stakeholders.status,
+      stakeholders.email,
+      stakeholders.influence_level,
+      stakeholders.interest_level,
       'Stakeholder'::text AS person_type,
-          CASE type
+          CASE stakeholders.type
               WHEN 'Stakeholders::Individual'::text THEN 'Individual'::text
               WHEN 'Stakeholders::Organization'::text THEN 'Organization'::text
               ELSE 'Unknown'::text
-          END AS person_sub_type
-     FROM stakeholders;
+          END AS person_sub_type,
+      stakeholders.created_at,
+      stakeholders.updated_at
+     FROM stakeholders
+  UNION
+   SELECT account_members.user_id AS id,
+      account_members.account_id,
+      'User'::character varying AS linked_resource_type,
+      users.id AS linked_resource_id,
+      COALESCE(NULLIF((users.name)::text, ''::text), initcap(translate(split_part(users.email, '@'::citext, 1), '0123456789.-_+'::text, ''::text))) AS name,
+      users.status,
+      users.email,
+      'n/a'::character varying AS influence_level,
+      'n/a'::character varying AS interest_level,
+      'Team Member'::text AS person_type,
+      'Collaborator'::text AS person_sub_type,
+      users.created_at,
+      users.updated_at
+     FROM ((account_members
+       JOIN accounts ON ((account_members.account_id = accounts.id)))
+       JOIN users ON ((account_members.user_id = users.id)))
+  UNION
+   SELECT users.id,
+      accounts.id AS account_id,
+      'User'::character varying AS linked_resource_type,
+      users.id AS linked_resource_id,
+      COALESCE(NULLIF((users.name)::text, ''::text), initcap(translate(split_part(users.email, '@'::citext, 1), '0123456789.-_+'::text, ''::text))) AS name,
+      users.status,
+      users.email,
+      'n/a'::character varying AS influence_level,
+      'n/a'::character varying AS interest_level,
+      'Team Member'::text AS person_type,
+      'Account Owner'::text AS person_sub_type,
+      users.created_at,
+      users.updated_at
+     FROM (users
+       JOIN accounts ON ((users.id = accounts.owner_id)));
   SQL
 end
