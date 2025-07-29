@@ -6,6 +6,10 @@
 
 **Adaptive strategy infrastructure for living Theories of Change**
 
+> NOTE: We are in the early stages of developing this new platform. 
+>
+> Please consider the README and associated documentation as aspirational - any feedback on what we are trying to achieve is highly appreciated. 
+
 ## Overview
 
 **Decidodeck** is an open-source change management platform that helps teams and organizations design, adapt, and reflect on complex Theories of Change. It blends familiar outcome-mapping techniques with practical facilitation tools to explore complex situations, highlight tensions, and keep track of how things connect and shift over time.
