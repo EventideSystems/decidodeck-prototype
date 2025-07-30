@@ -95,7 +95,7 @@ Conventional markup systems - like tags or subsystem identifiers - tend to opera
 - Use symbolic affordances (e.g. glyphs, fog zones) to hold space for ambiguity and resonance.
 - Avoid overly rational or utilitarian flows that flatten emotional nuance.
 
-#### 📱 **Device & Context Responsiveness
+#### 📱 Device & Context Responsiveness
 - Design for varied screen sizes, input methods, and environmental conditions.
 - Consider low-bandwidth or offline access constraints.
 - Ensure legibility and usability in bright light, motion, or fatigue contexts.
