@@ -63,7 +63,7 @@ For more details, refer to our [design documentation →](/doc/DESIGN.md)
 
 ## Philosophy
 
-Decidodeck is more than a planning tool — it’s built on the understanding that change is complex and often messy. It recognizes that strategy involves emotion, that contradictions can spark new insights, and that learning rarely follows a straight path.
+Decidodeck is more than a planning tool - it’s built on the understanding that change is complex and often messy. It recognizes that strategy involves emotion, that contradictions can spark new insights, and that learning rarely follows a straight path.
 
 Instead of chasing clarity for its own sake, Decidodeck holds space for complexity and desire. It helps teams map not only what they aim to do - but also what they're not willing to betray in the process.
 
