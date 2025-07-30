@@ -19,7 +19,7 @@ module FlashNotifications
       render turbo_stream: turbo_stream.append(
         "flash-notifications",
         render_to_string(
-          partial: "shared/flash_notification",
+          partial: "flash_notification",
           locals: {
             type: type,
             message: message,
