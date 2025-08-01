@@ -5,7 +5,7 @@ class PeopleController < ApplicationController
   before_action :ensure_current_account
 
   def index
-    @people = Person.where(account: current_account)
+    @people = policy_scope(Person).all
   end
 
   private

@@ -38,6 +38,7 @@ class Account < ApplicationRecord
   has_many :stakeholders, class_name: "Stakeholders::Base", dependent: :destroy
   has_many :account_members, dependent: :destroy
   has_many :members, through: :account_members, source: :user, inverse_of: :accounts
+  has_many :people, class_name: "Person", dependent: :destroy
 
   def stakeholders_individuals
     stakeholders.where(type: "Stakeholders::Individual")
