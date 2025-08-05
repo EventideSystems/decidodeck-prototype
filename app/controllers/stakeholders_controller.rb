@@ -58,7 +58,7 @@ class StakeholdersController < ApplicationController
     class_key = @stakeholder.class.name.underscore.tr("/", "_")
 
     params.require(class_key).permit(
-      :name, :email, :phone, :description, :notes,
+      :name, :first_name, :last_name, :email, :phone, :description, :notes,
       :stakeholder_type, :influence_level, :interest_level,
       :priority_score, :status, tags: []
     )
