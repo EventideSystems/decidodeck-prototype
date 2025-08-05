@@ -36,7 +36,7 @@ class StakeholdersController < ApplicationController
 
   def update
     if @stakeholder.update(stakeholder_params)
-      redirect_to @stakeholder, notice: "Stakeholder was successfully updated."
+      redirect_to stakeholder_url(@stakeholder), notice: "Stakeholder was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -55,7 +55,9 @@ class StakeholdersController < ApplicationController
   end
 
   def stakeholder_params
-    params.require(:stakeholder).permit(
+    class_key = @stakeholder.class.name.underscore.tr("/", "_")
+
+    params.require(class_key).permit(
       :name, :email, :phone, :description, :notes,
       :stakeholder_type, :influence_level, :interest_level,
       :priority_score, :status, tags: []

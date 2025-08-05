@@ -81,6 +81,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_14_134025) do
     t.string "name", limit: 200, null: false
     t.text "description"
     t.string "status", default: "active", null: false
+    t.text "notes"
     t.citext "email"
     t.string "phone", limit: 20
     t.text "address"

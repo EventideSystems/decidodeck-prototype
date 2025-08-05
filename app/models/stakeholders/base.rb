@@ -20,6 +20,7 @@
 #  legal_name        :string(200)
 #  log_data          :jsonb
 #  name              :string(200)      not null
+#  notes             :text
 #  organization_type :string(50)
 #  phone             :string(20)
 #  priority_score    :integer          default(50)

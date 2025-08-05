@@ -7,14 +7,12 @@ module ApplicationHelper
 
   def influence_level_text(level)
     return nil if level.blank?
-    return "N/A" if level.to_s.downcase == "n/a"
 
     "#{level.humanize} Influence"
   end
 
   def interest_level_text(level)
     return nil if level.blank?
-    return "N/A" if level.to_s.downcase == "n/a"
 
     "#{level.humanize} Interest"
   end
@@ -38,7 +36,6 @@ module ApplicationHelper
     content_tag :span, text,
       class: "inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400"
   end
-  include NotificationHelper
 
   def html_lang
     I18n.locale == I18n.default_locale ? "en" : I18n.locale.to_s

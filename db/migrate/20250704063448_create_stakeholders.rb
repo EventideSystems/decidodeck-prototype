@@ -8,6 +8,7 @@ class CreateStakeholders < ActiveRecord::Migration[8.0]
       t.string :name, null: false, limit: 200
       t.text :description
       t.string :status, null: false, default: 'active' # active, inactive, archived
+      t.text :notes
 
       ## Contact information
       t.citext :email
