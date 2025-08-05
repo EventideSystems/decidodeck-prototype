@@ -1,4 +1,4 @@
-<%= form_with(model: stakeholder, url: stakeholder.persisted? ? stakeholder_path(stakeholder) : stakeholders_path, local: true, class: "space-y-6") do |form| %>
+<%= form_with(model: stakeholder, url: stakeholder.persisted? ? stakeholder_path(stakeholder) : stakeholders_path, local: true, class: "space-y-6", builder: TailwindFormBuilder) do |form| %>
   <% if stakeholder.errors.any? %>
     <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md p-4">
       <div class="flex">
@@ -38,107 +38,70 @@
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <% if stakeholder.is_a?(Stakeholders::Individual) %>
           <!-- Individual stakeholder: show first_name and last_name -->
-          <div>
-            <%= form.label :first_name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.text_field :first_name, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Enter first name" %>
-          </div>
-
-          <div>
-            <%= form.label :last_name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.text_field :last_name, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Enter last name" %>
-          </div>
+          <%= form.text_field :first_name, placeholder: "Enter first name" %>
+          <%= form.text_field :last_name, placeholder: "Enter last name" %>
         <% else %>
           <!-- Non-individual stakeholder: show name field -->
-          <div>
-            <%= form.label :name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.text_field :name, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Enter stakeholder name" %>
-          </div>
-
-          <div>
-            <%= form.label :stakeholder_type, "Type", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.select :stakeholder_type, 
-                  options_for_select(Stakeholders::Base.stakeholder_types.map { |type| [type.humanize, type] }, stakeholder.stakeholder_type),
-                  { prompt: "Select stakeholder type" },
-                  { class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" } %>
-          </div>
+          <%= form.text_field :name, placeholder: "Enter stakeholder name" %>
+          <%= form.select :stakeholder_type, 
+                options_for_select(Stakeholders::Base.stakeholder_types.map { |type| [type.humanize, type] }, stakeholder.stakeholder_type),
+                { prompt: "Select stakeholder type" },
+                { label: "Type" } %>
         <% end %>
       </div>
 
       <% if stakeholder.is_a?(Stakeholders::Individual) %>
         <!-- Additional fields for Individual stakeholders -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div>
-            <%= form.label :job_title, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.text_field :job_title, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Enter job title" %>
-          </div>
-
-          <div>
-            <%= form.label :stakeholder_type, "Type", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <%= form.select :stakeholder_type, 
-                  options_for_select(Stakeholders::Base.stakeholder_types.map { |type| [type.humanize, type] }, stakeholder.stakeholder_type),
-                  { prompt: "Select stakeholder type" },
-                  { class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" } %>
-          </div>
+          <%= form.text_field :job_title, placeholder: "Enter job title" %>
+          <%= form.select :stakeholder_type, 
+                options_for_select(Stakeholders::Base.stakeholder_types.map { |type| [type.humanize, type] }, stakeholder.stakeholder_type),
+                { prompt: "Select stakeholder type" },
+                { label: "Type" } %>
         </div>
       <% end %>
 
       <!-- Contact Information -->
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <div>
-          <%= form.label :email, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-          <%= form.email_field :email, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "stakeholder@example.com" %>
-        </div>
-
-        <div>
-          <%= form.label :phone, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-          <%= form.telephone_field :phone, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "+1 (555) 123-4567" %>
-        </div>
+        <%= form.email_field :email, placeholder: "stakeholder@example.com" %>
+        <%= form.telephone_field :phone, placeholder: "+1 (555) 123-4567" %>
       </div>
 
       <!-- Engagement Matrix -->
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <div>
-          <%= form.label :influence_level, "Influence Level", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-          <%= form.select :influence_level, 
-                options_for_select(Stakeholders::Base.influence_levels.map { |level| [level.humanize, level] }, stakeholder.influence_level),
-                { prompt: "Select influence level" },
-                { class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" } %>
-        </div>
-
-        <div>
-          <%= form.label :interest_level, "Interest Level", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-          <%= form.select :interest_level, 
-                options_for_select(Stakeholders::Base.interest_levels.map { |level| [level.humanize, level] }, stakeholder.interest_level),
-                { prompt: "Select interest level" },
-                { class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" } %>
-        </div>
-
-        <div>
-          <%= form.label :priority_score, "Priority Score (1-100)", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-          <%= form.number_field :priority_score, in: 1..100, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "50" %>
-        </div>
+        <%= form.select :influence_level, 
+              options_for_select(Stakeholders::Base.influence_levels.map { |level| [level.humanize, level] }, stakeholder.influence_level),
+              { prompt: "Select influence level" },
+              { label: "Influence Level" } %>
+        
+        <%= form.select :interest_level, 
+              options_for_select(Stakeholders::Base.interest_levels.map { |level| [level.humanize, level] }, stakeholder.interest_level),
+              { prompt: "Select interest level" },
+              { label: "Interest Level" } %>
+        
+        <%= form.number_field :priority_score, 
+              in: 1..100, 
+              placeholder: "50",
+              label: "Priority Score (1-100)" %>
       </div>
 
       <!-- Status -->
-      <div>
-        <%= form.label :status, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-        <%= form.select :status, 
-              options_for_select([["Active", "active"], ["Inactive", "inactive"], ["Archived", "archived"]], stakeholder.status),
-              {},
-              { class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2" } %>
-      </div>
+      <%= form.select :status, 
+            options_for_select([["Active", "active"], ["Inactive", "inactive"], ["Archived", "archived"]], stakeholder.status),
+            {},
+            { wrapper_class: "w-full" } %>
 
       <!-- Description -->
-      <div>
-        <%= form.label :description, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-        <%= form.text_area :description, rows: 3, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Brief description of the stakeholder..." %>
-      </div>
+      <%= form.text_area :description, 
+            rows: 3, 
+            placeholder: "Brief description of the stakeholder...",
+            wrapper_class: "w-full" %>
 
       <!-- Notes -->
-      <div>
-        <%= form.label :notes, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-        <%= form.text_area :notes, rows: 4, class: "mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base px-3 py-2", placeholder: "Additional notes and observations..." %>
-      </div>
+      <%= form.text_area :notes, 
+            rows: 4, 
+            placeholder: "Additional notes and observations...",
+            wrapper_class: "w-full" %>
     </div>
 
     <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
