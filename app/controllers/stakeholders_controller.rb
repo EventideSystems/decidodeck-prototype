@@ -17,12 +17,33 @@ class StakeholdersController < ApplicationController
   end
 
   def new
-    @stakeholder = current_user.account.stakeholders.build
-    @stakeholder.stakeholder_type = params[:type] if params[:type].present?
+    stakeholder_type = params[:type] || "Stakeholders::Individual"
+
+    # Build the appropriate stakeholder subclass
+    @stakeholder = case stakeholder_type
+                   when "Stakeholders::Individual", "individual"
+                     current_account.stakeholders.build(type: "Stakeholders::Individual")
+                   when "Stakeholders::Organization", "organization"
+                     current_account.stakeholders.build(type: "Stakeholders::Organization")
+                   else
+                     current_account.stakeholders.build(type: "Stakeholders::Individual")
+                   end
+
+    @stakeholder.stakeholder_type = params[:stakeholder_type] if params[:stakeholder_type].present?
   end
 
   def create
-    @stakeholder = current_user.account.stakeholders.build(stakeholder_params)
+    stakeholder_type = stakeholder_params[:type] || "Stakeholders::Individual"
+
+    # Build the appropriate stakeholder subclass
+    @stakeholder = case stakeholder_type
+                   when "Stakeholders::Individual", "individual"
+                     current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Individual"))
+                   when "Stakeholders::Organization", "organization"
+                     current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Organization"))
+                   else
+                     current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Individual"))
+                   end
 
     if @stakeholder.save
       redirect_to @stakeholder, notice: "Stakeholder was successfully created."
@@ -55,11 +76,11 @@ class StakeholdersController < ApplicationController
   end
 
   def stakeholder_params
-    class_key = @stakeholder.class.name.underscore.tr("/", "_")
+    class_key = (@stakeholder&.class&.name || "Stakeholders::Base").underscore.tr("/", "_")
 
     params.require(class_key).permit(
-      :name, :first_name, :last_name, :email, :phone, :description, :notes,
-      :stakeholder_type, :influence_level, :interest_level,
+      :name, :first_name, :last_name, :job_title, :email, :phone, :description, :notes,
+      :stakeholder_type, :influence_level, :interest_level, :type,
       :priority_score, :status, tags: []
     )
   end

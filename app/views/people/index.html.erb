@@ -86,13 +86,15 @@
           </svg>
         </div>
         <div class="ml-3 flex-1">
-          <div class="block group cursor-pointer">
-            <h3 class="text-sm font-medium text-purple-900 dark:text-purple-100 group-hover:text-purple-800 dark:group-hover:text-purple-50">Add Organization</h3>
-            <p class="text-sm text-purple-700 dark:text-purple-300 mt-1">Create a corporate stakeholder record</p>
-            <span class="mt-2 inline-block text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:text-purple-500 dark:group-hover:text-purple-300">
-              Create Organization →
-            </span>
-          </div>
+          <%= link_to new_stakeholder_path(type: 'organization'), class: "block group" do %>
+            <div class="block group cursor-pointer">
+              <h3 class="text-sm font-medium text-purple-900 dark:text-purple-100 group-hover:text-purple-800 dark:group-hover:text-purple-50">Add Organization</h3>
+              <p class="text-sm text-purple-700 dark:text-purple-300 mt-1">Create a corporate stakeholder record</p>
+              <span class="mt-2 inline-block text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:text-purple-500 dark:group-hover:text-purple-300">
+                Create Organization →
+              </span>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
