@@ -21,13 +21,13 @@ class StakeholdersController < ApplicationController
 
     # Build the appropriate stakeholder subclass
     @stakeholder = case stakeholder_type
-                   when "Stakeholders::Individual", "individual"
+    when "Stakeholders::Individual", "individual"
                      current_account.stakeholders.build(type: "Stakeholders::Individual")
-                   when "Stakeholders::Organization", "organization"
+    when "Stakeholders::Organization", "organization"
                      current_account.stakeholders.build(type: "Stakeholders::Organization")
-                   else
+    else
                      current_account.stakeholders.build(type: "Stakeholders::Individual")
-                   end
+    end
 
     @stakeholder.stakeholder_type = params[:stakeholder_type] if params[:stakeholder_type].present?
   end
@@ -37,13 +37,13 @@ class StakeholdersController < ApplicationController
 
     # Build the appropriate stakeholder subclass
     @stakeholder = case stakeholder_type
-                   when "Stakeholders::Individual", "individual"
+    when "Stakeholders::Individual", "individual"
                      current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Individual"))
-                   when "Stakeholders::Organization", "organization"
+    when "Stakeholders::Organization", "organization"
                      current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Organization"))
-                   else
+    else
                      current_account.stakeholders.build(stakeholder_params.merge(type: "Stakeholders::Individual"))
-                   end
+    end
 
     if @stakeholder.save
       redirect_to @stakeholder, notice: "Stakeholder was successfully created."
