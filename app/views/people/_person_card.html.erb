@@ -35,16 +35,8 @@
     
     <div class="flex items-center justify-between">
       <div class="flex space-x-2">
-        <% if person.try(:influence_level) %>
-          <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
-            <%= influence_level_text(person.influence_level) %>
-          </span>
-        <% end %>
-        <% if person.try(:interest_level) %>
-          <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400">
-            <%= interest_level_text(person.interest_level) %>
-          </span>
-        <% end %>
+        <%= influence_level_badge(person) %>
+        <%= interest_level_badge(person) %>
       </div>
     </div>
   </div>

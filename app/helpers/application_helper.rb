@@ -7,16 +7,36 @@ module ApplicationHelper
 
   def influence_level_text(level)
     return nil if level.blank?
-    return 'N/A' if level.to_s.downcase == 'n/a'
+    return "N/A" if level.to_s.downcase == "n/a"
 
     "#{level.humanize} Influence"
   end
 
   def interest_level_text(level)
     return nil if level.blank?
-    return 'N/A' if level.to_s.downcase == 'n/a'
+    return "N/A" if level.to_s.downcase == "n/a"
 
     "#{level.humanize} Interest"
+  end
+
+  def influence_level_badge(person)
+    return "" unless person.respond_to?(:influence_level) && person.influence_level.present?
+
+    text = influence_level_text(person.influence_level)
+    return "" if text.nil?
+
+    content_tag :span, text,
+      class: "inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400"
+  end
+
+  def interest_level_badge(person)
+    return "" unless person.respond_to?(:interest_level) && person.interest_level.present?
+
+    text = interest_level_text(person.interest_level)
+    return "" if text.nil?
+
+    content_tag :span, text,
+      class: "inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400"
   end
   include NotificationHelper
 
