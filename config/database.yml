@@ -86,13 +86,13 @@ production:
     password: <%= ENV["DECIDODECK_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: decidodeck_production_cache
+    database: decidodeck_production
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: decidodeck_production_queue
+    database: decidodeck_production
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: decidodeck_production_cable
+    database: decidodeck_production
     migrations_paths: db/cable_migrate
