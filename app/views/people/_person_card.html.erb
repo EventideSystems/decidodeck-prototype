@@ -1,9 +1,9 @@
 <%= link_to stakeholder_path(id: person.id ) do %>
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md dark:hover:shadow-lg transition-shadow duration-200 flex flex-col h-full">
-    <div class="flex items-start justify-between mb-4">
-      <div class="flex items-center">
-        <div class="h-12 w-12 bg-blue-500 dark:bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
-          <%= person.name.split.map(&:first).join.upcase %>
+    <div class="flex items-start justify-between mb-4 order-first">
+      <div class="flex items-start">
+        <div class="h-12 w-12 bg-blue-500 dark:bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0 mt-0">
+          <%= initials_for(person.name) %>
         </div>
         <div class="ml-3">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white"><%= person.name %></h3>
@@ -37,12 +37,12 @@
       <div class="flex space-x-2">
         <% if person.try(:influence_level) %>
           <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
-            <%= person.influence_level.humanize %> Influence
+            <%= influence_level_text(person.influence_level) %>
           </span>
         <% end %>
         <% if person.try(:interest_level) %>
           <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400">
-            <%= person.interest_level.humanize %> Interest
+            <%= interest_level_text(person.interest_level) %>
           </span>
         <% end %>
       </div>

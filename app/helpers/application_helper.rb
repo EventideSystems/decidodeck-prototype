@@ -1,4 +1,23 @@
 module ApplicationHelper
+  def initials_for(name)
+    return "?" if name.blank?
+
+    name.split.map(&:first).join.upcase
+  end
+
+  def influence_level_text(level)
+    return nil if level.blank?
+    return 'N/A' if level.to_s.downcase == 'n/a'
+
+    "#{level.humanize} Influence"
+  end
+
+  def interest_level_text(level)
+    return nil if level.blank?
+    return 'N/A' if level.to_s.downcase == 'n/a'
+
+    "#{level.humanize} Interest"
+  end
   include NotificationHelper
 
   def html_lang
