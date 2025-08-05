@@ -62,6 +62,9 @@ class Stakeholders::Individual < Stakeholders::Base
   scope :by_name, ->(name) { where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{name}%") }
   scope :by_job_title, ->(title) { where("job_title ILIKE ?", "%#{title}%") }
 
+  # Callbacks
+  before_save :set_name_from_first_and_last_name
+
   # Instance methods
   def full_name
     "#{first_name} #{last_name}".strip
@@ -105,5 +108,11 @@ class Stakeholders::Individual < Stakeholders::Base
 
   def set_name_from_subclass
     self.name = full_name if first_name.present? && last_name.present?
+  end
+
+  def set_name_from_first_and_last_name
+    if first_name.present? || last_name.present?
+      self.name = [ first_name, last_name ].compact.join(" ").strip
+    end
   end
 end
