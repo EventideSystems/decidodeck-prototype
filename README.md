@@ -4,6 +4,13 @@
 ![check](https://github.com/EventideSystems/decidodeck/actions/workflows/ci.yml/badge.svg)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 
+> ***************************************************************************************************************
+> 
+> UPDATE: We are merging this project into the old Tool for Systemic Change system, itself renamed to 'decidodeck'
+> See https://github.com/EventideSystems/decidodeck
+> 
+> ***************************************************************************************************************
+
 **Adaptive strategy infrastructure for living Theories of Change**
 
 > NOTE: We are in the early stages of developing this new platform. 
