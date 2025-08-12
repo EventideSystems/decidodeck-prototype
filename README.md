@@ -7,6 +7,7 @@
 > ***************************************************************************************************************
 > 
 > UPDATE: We are merging this project into the old Tool for Systemic Change system, itself renamed to 'decidodeck'
+> 
 > See https://github.com/EventideSystems/decidodeck
 > 
 > ***************************************************************************************************************
